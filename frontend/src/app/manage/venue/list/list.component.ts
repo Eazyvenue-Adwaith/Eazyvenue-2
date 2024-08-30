@@ -260,6 +260,7 @@ export class ListComponent implements OnInit {
                 (event.first || 0) / (event.rows || 10) +
                 1
             ).toString(),
+            filterByDisable: 'false'
         });
 
         if (this.searchby && this.startDate && this.endDate) {
@@ -300,7 +301,8 @@ export class ListComponent implements OnInit {
 
         this.VenueService.getVenueListForFilter(queryString).subscribe(
             (data) => {
-                this.venueList = data.data.items;
+                // Filter out disabled venues
+                this.venueList = data.data.items.filter(venue => !venue.disable);
                 this.totalRecords = data.data.totalCount;
             },
             (err) => {
@@ -308,7 +310,6 @@ export class ListComponent implements OnInit {
             }
         );
     }
-
     clear() {
         this.startDate = null;
         this.endDate = null;
@@ -663,7 +664,6 @@ export class ListComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 var updateData = '{"disable":true}';
-                // console.log(cmsmodule._id);
                 this.VenueService.updateVenue(venue.id, updateData).subscribe(
                     (data) => {
                         this.messageService.add({
@@ -673,15 +673,21 @@ export class ListComponent implements OnInit {
                             detail: 'Venue Deleted',
                             life: 3000,
                         });
-                        this.refreshVenueList(this.lastTableLazyLoadEvent);
+                        // Remove the venue from the local list
+                        this.venueList = this.venueList.filter(v => v.id !== venue.id);
+                        this.totalRecords = data.data.totalCount;
                     },
                     (err) => {
                         this.errorMessage = err.error.message;
+                        this.messageService.add({
+                            key: 'toastmsg',
+                            severity: 'error',
+                            summary: 'Error',
+                            detail: 'Failed to delete venue',
+                            life: 3000,
+                        });
                     }
                 );
-            },
-            reject: () => {
-                this.refreshVenueList(this.lastTableLazyLoadEvent);
             },
         });
     }

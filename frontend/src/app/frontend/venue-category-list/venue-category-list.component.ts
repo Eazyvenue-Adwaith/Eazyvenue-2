@@ -266,9 +266,9 @@ export class VenueCategoryListComponent {
     async ngOnInit() {
         const canonicalLink = this.renderer.createElement('link');
         this.renderer.setAttribute(canonicalLink, 'rel', 'canonical');
-        this.renderer.setAttribute(canonicalLink, 'href', window.location.href); 
+        this.renderer.setAttribute(canonicalLink, 'href', window.location.href);
         this.renderer.appendChild(document.head, canonicalLink);
-        
+
         this.urlMode = "venue_list";
         this.minDateValue = new Date();
         this.renderer.addClass(document.body, 'body-dark');
@@ -402,8 +402,8 @@ export class VenueCategoryListComponent {
                 this.rangeDates.push(new Date(this.endDate));
             }
         });
-     
-        
+
+
         this.getSlots();
         this.getCategoryBySlug();
         await this.getSubareas();
@@ -414,7 +414,7 @@ export class VenueCategoryListComponent {
             const city_slug = params['city'];
             const subarea_slug = params['subarea'];
 
-            if(!occasion_slug && !city_slug && !subarea_slug){                
+            if(!occasion_slug && !city_slug && !subarea_slug){
                 let mode = "category";
                 this.currentTitle = "Explore The Top Banquet Halls Near You - Eazyvenue.com";
                 this.currentDescription = "Explore exquisite banquet halls near you for weddings, parties, and corporate events. EazyVenue.com offers a curated selection of premier event spaces, blending sophistication and charm. Book now to create lasting memories in a stunning venue tailored to your needs.";
@@ -439,7 +439,7 @@ export class VenueCategoryListComponent {
                                 "@type": "ListItem",
                                 "name": this.currentTitle,
                                 "position": "2"
-                            } 
+                            }
                         ], "@type": "BreadcrumbList",
                         "@context": "http://schema.org"
                     }
@@ -498,7 +498,7 @@ export class VenueCategoryListComponent {
                     this.getVenueList(this.lazyLoadEvent,'load')
                 },err =>{
 
-                }) 
+                })
             }else if(occasion_slug && city_slug && !subarea_slug){
                 this.guestCount = 100;
                 this.selectedFilter = [];
@@ -508,7 +508,7 @@ export class VenueCategoryListComponent {
                     this.selectedOccasion = res.data;
                     this.filterCategoryId = res.data.id
                     this.vendorService.getCityByName(this.capitalizeWords(city_slug)).subscribe(cdata =>{
-                        this.selectedCities.push(cdata.data); 
+                        this.selectedCities.push(cdata.data);
                         this.filterCityIds = [ this.selectedCities[0].id]
                         this.currentTitle = "List of Best "+this.capitalizeWords(occasion_slug) +" Banquet halls in "+this.capitalizeWords(city_slug) + " - Eazyvenue.com";
                         this.currentDescription = `Looking for the perfect ${this.capitalizeWords(occasion_slug)} Banquet halls in ${this.capitalizeWords(city_slug)} for your event? Check out our list of the best ${this.capitalizeWords(occasion_slug)} Banquet halls in ${this.capitalizeWords(city_slug)} in the area! From luxurious ballrooms to intimate halls, we've got you covered`;
@@ -548,11 +548,11 @@ export class VenueCategoryListComponent {
                                         "name": this.currentTitle,
                                         "position": "4"
                                     }
-    
+
                                 ], "@type": "BreadcrumbList",
                                 "@context": "http://schema.org"
                             }
-    
+
                         const itemListScript =  document.createElement('script');
                         itemListScript.type = 'application/ld+json';
                         itemListScript.text = JSON.stringify(itemListSchema);
@@ -563,7 +563,7 @@ export class VenueCategoryListComponent {
                     })
                 },err =>{
 
-                }) 
+                })
             }else if(occasion_slug && city_slug && subarea_slug){
                 this.guestCount = 100;
                 this.selectedFilter = [];
@@ -573,7 +573,7 @@ export class VenueCategoryListComponent {
                     this.selectedOccasion = res.data;
                     this.filterCategoryId = res.data.id
                     this.vendorService.getCityByName(this.capitalizeWords(city_slug)).subscribe(cdata =>{
-                        this.selectedCities.push(cdata.data); 
+                        this.selectedCities.push(cdata.data);
                         this.filterCityIds = [ this.selectedCities[0].id]
                         this.currentTitle = "List of Best "+this.capitalizeWords(occasion_slug) +" Banquet halls in "+this.capitalizeWords(subarea_slug) + ", "+this.capitalizeWords(city_slug) + " - Eazyvenue.com";
                         this.currentDescription = `Looking for the perfect ${this.capitalizeWords(occasion_slug)} Banquet halls in ${this.capitalizeWords(subarea_slug)}, ${this.capitalizeWords(city_slug)} for your event? Check out our list of the best ${this.capitalizeWords(occasion_slug)} Banquet halls in ${this.capitalizeWords(subarea_slug)}, ${this.capitalizeWords(city_slug)} in the area! From luxurious ballrooms to intimate halls, we've got you covered`;
@@ -621,19 +621,19 @@ export class VenueCategoryListComponent {
                                         "name": this.currentTitle,
                                         "position": "5"
                                     }
-    
+
                                 ], "@type": "BreadcrumbList",
                                 "@context": "http://schema.org"
                             }
-    
+
                         const itemListScript =  document.createElement('script');
                         itemListScript.type = 'application/ld+json';
                         itemListScript.text = JSON.stringify(itemListSchema);
                         document.body.appendChild(itemListScript);
 
                         this.vendorService.getSubareaByName(this.capitalizeWords(subarea_slug)).subscribe(
-                            sdata =>{   
-                                this.selectedSubareaData.push(sdata.data); 
+                            sdata =>{
+                                this.selectedSubareaData.push(sdata.data);
                                 this.filterSubareaIds = [this.selectedSubareaData[0].id]
                                 this.selectedSubareaIds = [this.selectedSubareaData[0].id]
                                 this.getVenueList(this.lazyLoadEvent,'load')
@@ -647,15 +647,15 @@ export class VenueCategoryListComponent {
                     })
                 },err =>{
 
-                }) 
-               
+                })
+
             }else{
                 this.router.navigateByUrl('/')
             }
 
         })
-        this.selectedSubareaIds = [...new Set(this.selectedSubareaIds)] 
-        
+        this.selectedSubareaIds = [...new Set(this.selectedSubareaIds)]
+
 
     }
     capitalizeWords(str) {
@@ -763,7 +763,7 @@ export class VenueCategoryListComponent {
         this.categoryService.getCategoryWithoutAuthList(query).subscribe(
             data => {
                 //if (data.data.items.length > 0) {
-                    
+
                 this.propertyTypesList = data.data.items.filter(item => item.name != 'Party Plots');
                 let count = 0;
                 this.propertyTypesList.forEach(element => {
@@ -863,7 +863,7 @@ export class VenueCategoryListComponent {
         let query = event.query;
         for (let i = 0; i < this.categoryMenuList.length; i++) {
             let category = this.categoryMenuList[i];
-            if (category.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {     
+            if (category.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
                 filtered.push(category);
             }
         }
@@ -902,7 +902,7 @@ export class VenueCategoryListComponent {
         this.venueService.getVenueListAllVenues().subscribe(
             data => {
                 // console.log(data);
-                
+
                 //if (data.data.items.length > 0) {
                 this.allVenueList = data.data.items;
                 //}
@@ -1000,12 +1000,12 @@ export class VenueCategoryListComponent {
             ['/banquet-halls'],
             {
                 queryParams: {
-                    startDate: this.startDate, 
-                    endDate: this.endDate, 
-                    capacity: this.capacity, 
-                    occasion: this.selectedCategories, 
+                    startDate: this.startDate,
+                    endDate: this.endDate,
+                    capacity: this.capacity,
+                    occasion: this.selectedCategories,
                     city: selectedCities,
-                    area: selectedSubareaIds, 
+                    area: selectedSubareaIds,
                     venue: selectedVenueIds
                 }
             }
@@ -1379,7 +1379,7 @@ export class VenueCategoryListComponent {
         });
 
     }
-    
+
     onSelectAmenities(amenity, event) {
         // console.log(amenity);
         const amenityName = amenity.name;
@@ -1528,21 +1528,21 @@ export class VenueCategoryListComponent {
             });
         }
         // console.log(query);
-        
+
         this.venueService.getMinMaxVenuePrice(query).subscribe(res =>{
             // console.log(res);
-            
+
             this.venuePriceRangeValues = [res.data[0].minCalculatedValue, res.data[0].maxCalculatedValue];
             this.rangeValues = [res.data[0].minCalculatedValue, res.data[0].maxCalculatedValue];
         },err =>{
             console.log(err);
-            
+
         })
     }
     getVenueList(event: LazyLoadEvent, mode) {
         // console.log(this.selectedAmenitiesNew);
         console.log(event);
-        
+
         let params = "";
         let rows = 10;
         let query = "filterByDisable=false&filterByStatus=true";
@@ -1817,7 +1817,7 @@ export class VenueCategoryListComponent {
             newQuery += "&startSearchDate=" + this.startDate + "&endSearchDate=" + this.endDate;
             query += "&filterByStartDate=" + this.startDate + "&filterByEndDate=" + this.endDate;
         }
-      
+
         query += "&pageSize=" + rows + "&pageNumber=" + this.pageNumber + params;
         this.venueList = [];
         this.venueList = Object.assign([], this.finalVenueList);
@@ -1825,7 +1825,7 @@ export class VenueCategoryListComponent {
         newQuery += "&pageSize=" + rows + "&pageNumber=" + this.pageNumber;
         // console.log(query);
         console.log(newQuery);
-        
+
         // this.venueService.getVenueListWithoutAuth(query).subscribe(
         this.venueService.getVenueListForFilter(newQuery).subscribe(
             async data => {
@@ -2070,7 +2070,7 @@ export class VenueCategoryListComponent {
                 if (maxPerPaxArray.length > 0) {
                     maxPerPaxPrice = Math.max(...minPerPaxArray)
                 }
-                
+
                 // this.venuePriceRangeValues = [minVenuePrice, maxVenuePrice];
                 // this.rangeValues = [minPerPaxPrice, maxPerPaxPrice];
                 // this.minValue = Number(minVenuePrice);
@@ -2080,7 +2080,7 @@ export class VenueCategoryListComponent {
                 this.totalRecords = data.data.totalCount;
                 //}
                 // console.log(this.finalVenueList);
-                
+
                 // this.finalVenueList.sort((a, b) => Number(a['minVenuePrice']) - Number(b['minVenuePrice']));
                 // if (this.selectedSort != null) {
                 //     if (this.selectedSort.value === 'price_low_high') {
@@ -2136,8 +2136,8 @@ export class VenueCategoryListComponent {
                     "priceRange": "Venue price starts from Rs."+minVenuePrice+" to Rs."+maxVenuePrice,
                     "telephone": "+91 93720 91300"
                 }
-        
-        
+
+
                 const localBusinessScript = document.createElement('script');
                 localBusinessScript.type = 'application/ld+json';
                 localBusinessScript.text = JSON.stringify(localBusinessSchema);
@@ -2156,16 +2156,16 @@ export class VenueCategoryListComponent {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
         const queryParams =  {
-            startDate: this.startDate, 
-            endDate: this.endDate, 
+            startDate: this.startDate,
+            endDate: this.endDate,
             capacity: this.guestCount,
-            occasion: this.selectedCategories, 
+            occasion: this.selectedCategories,
             city: selectedCities,
-            area: selectedSubareaIds, 
+            area: selectedSubareaIds,
             venue: selectedVenueIds
         };
         // console.log(queryParams);
-        
+
         this.router.navigate(
             ['/venue/' + id],
             {
@@ -2332,7 +2332,7 @@ export class VenueCategoryListComponent {
     }
     onScrollDown() {
         console.log(this.lazyLoadEvent);
-        
+
         this.pageNumber++;
         this.direction = "down";
         this.getVenueList(this.lazyLoadEvent, this.mode);

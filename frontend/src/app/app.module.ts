@@ -223,6 +223,7 @@ import { VendorFilterListComponent } from './frontend/vendor-filter-list/vendor-
 import { VendorDetailsComponent } from './frontend/vendor-details/vendor-details.component';
 import { VendorCompareComponent } from './frontend/vendor-compare/vendor-compare.component';
 import { CancellationComponent } from './frontend/cancellation/cancellation.component';
+import { FaqComponent } from './frontend/faq/faq.component';
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -331,6 +332,7 @@ FullCalendarModule.registerPlugins([
     declarations: [
         AboutUsComponent,
         AppComponent,
+        FaqComponent,
         AppMainComponent,
         AppRightpanelComponent,
         AppMenuComponent,

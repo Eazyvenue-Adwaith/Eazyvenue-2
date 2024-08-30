@@ -102,7 +102,7 @@
                 <p-autoComplete [(ngModel)]="selectedCountries" [suggestions]="filtration"
                     (completeMethod)="search($event)" (onSelect)="onSelectSearch($event)"
                     (onUnselect)="onClearResetAllData($event)" field="name"
-                    placeholder="City/Area/Venue/Restaurant/Banquet*" [multiple]="true"
+                    placeholder="easisVenue/Restaurant/Banquet*" [multiple]="true"
                     class="mostly-customized-scrollbar">
                     <ng-template let-item pTemplate="item">
                         <div class="flex align-items-center">
@@ -440,15 +440,15 @@
                     <div class="custom-input-box">
                         <p>First Name: </p>
                         <div class="">
-                            <input type="text" pInputText [(ngModel)]="userFirstName" class="custom-input" name="userFirstName" (input)="validateFirstName()" #userFirstNameInput="ngModel" placeholder="First name" required minlength="3"> 
+                            <input type="text" pInputText [(ngModel)]="userFirstName" class="custom-input" name="userFirstName" (input)="validateFirstName()" #userFirstNameInput="ngModel" placeholder="First name" required minlength="3">
                             <div *ngIf="firstNameError" style="font-size: 8px; color: red;margin: 0; padding: 0;">First Name is required.</div>
                         </div>
-                        
+
                     </div>
                     <div class="custom-input-box">
                         <p>Last Name: </p>
                         <div class="">
-                        <input type="text" pInputText [(ngModel)]="userLastName" name="userLastName" class="custom-input"  (input)="validateLastName()"  #userLastNameInput="ngModel" placeholder="Last name" required minlength="3"> 
+                        <input type="text" pInputText [(ngModel)]="userLastName" name="userLastName" class="custom-input"  (input)="validateLastName()"  #userLastNameInput="ngModel" placeholder="Last name" required minlength="3">
                         <div *ngIf="lastNameError" style="font-size: 8px; color: red;margin: 0; padding: 0;">Last Name is required.</div>
                         <!-- <div *ngIf="userLastNameInput.invalid && (userLastNameInput.dirty || userLastNameInput.touched)">
                             <div *ngIf="userLastNameInput.errors.required" style="font-size: 8px; color: red;">Last Name is required.</div>
@@ -514,7 +514,7 @@
             </h5>
         </form>
     </div>
-</p-dialog> 
+</p-dialog>
 
 
 
@@ -685,7 +685,7 @@
                 <p-button icon="pi pi-times" styleClass="p-button-rounded p-button-danger p-button-text p-button-raised close-btn-bottom"></p-button> -->
                 <!-- <button pButton class="p-button-rounded p-button-danger p-button-text p-button-raised" type="button" label="Close" [showButtonBar]="true"></button> -->
             </p-calendar>
-                
+
             </div>
             <div class="col-md-12 p-p-0 calendar-div">
                 <button (click)="showOfferDialog()" pButton pRipple type="button" (click)="homeSearch = false"
