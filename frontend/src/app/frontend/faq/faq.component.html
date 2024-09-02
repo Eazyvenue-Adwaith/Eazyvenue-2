@@ -1,52 +1,43 @@
 <section class="section">
     <div class="container">
-        <h2 class="title text-center text-uppercase pb-1">Frequently Asked Questions</h2>
-        <p class="py-2"></p>
+      <h2 class="title text-center text-uppercase pb-1">Frequently Asked Questions</h2>
+      <p class="py-2"></p>
 
-        <!-- FAQ Section -->
-        <div class="faq-section text-center">
-            <div
-                *ngFor="let faq of faqs; let i = index"
-                [class.accordion-active]="activeIndex === i"
-            >
-                <h3 (click)="toggleAccordion(i)">
-                    {{ faq.question }}
-                    <span *ngIf="activeIndex !== i">&#9662;</span>
-                    <span *ngIf="activeIndex === i">&#9652;</span>
-                </h3>
-                <div *ngIf="activeIndex === i">
-                    <p>{{ faq.answer }}</p>
-                </div>
-            </div>
+      <!-- FAQ Section -->
+      <div class="faq-section text-center">
+        <div *ngFor="let faq of faqs; let i = index" [class.accordion-active]="activeIndex === i">
+          <h3 (click)="toggleAccordion(i)">
+            {{ faq.question }}
+            <span *ngIf="activeIndex !== i">&#9662;</span>
+            <span *ngIf="activeIndex === i">&#9652;</span>
+          </h3>
+          <div *ngIf="activeIndex === i">
+            <p>{{ faq.answer }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Display Search Results -->
+      <div class="search-results">
+        <h2>Frequent Searches Leading To This Page</h2>
+        <div class="search-list">
+          <span *ngFor="let search of frequentSearches">{{ search }}</span>
         </div>
 
-        <!-- Display Search Results -->
-        <!-- search-results.component.html -->
+        <!-- <h2>Similar Near Me Searches</h2>
+        <div class="search-list">
+          <span *ngFor="let search of nearMeSearches">{{ search }}</span>
+        </div> -->
 
-        <div class="search-results">
-            <h2>Frequent Searches Leading To This Page</h2>
-            <div class="search-list">
-                <span *ngFor="let search of frequentSearches">{{
-                    search
-                }}</span>
-            </div>
-
-            <h2>Similar Near Me Searches</h2>
-            <div class="search-list">
-                <span *ngFor="let search of nearMeSearches">{{ search }}</span>
-            </div>
-
-            <h2>Find Banquet Halls In Localities In {{ selectedCity }}</h2>
-            <div class="search-list">
-                <span *ngFor="let search of localitySearches">{{
-                    search
-                }}</span>
-            </div>
-
-            <h2>Other Related Searches</h2>
-            <div class="search-list">
-                <span *ngFor="let search of relatedSearches">{{ search }}</span>
-            </div>
+        <h2>Find Banquet Halls In Localities In {{ this.selectedVenueList[0].cityname}}</h2>
+        <div class="search-list">
+          <span *ngFor="let search of localitySearches">{{ search }}</span>
         </div>
+
+        <h2>Other Related Searches</h2>
+        <div class="search-list">
+          <span *ngFor="let search of relatedSearches">{{ search }}</span>
+        </div>
+      </div>
     </div>
-</section>
+  </section>

@@ -1,140 +1,132 @@
-import { Component, OnInit } from '@angular/core';
-import { SubareaService } from 'src/app/services/subarea.service';
-import { CommonService } from 'src/app/services/common.service';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
   styleUrls: ['./faq.component.scss']
 })
-export class FaqComponent implements OnInit {
-  faqs = [
-    { question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor?', answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor?', answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor?', answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    // Add more FAQs as needed
-  ];
+export class FaqComponent implements OnInit, OnChanges {
+  @Input() selectedVenueList: { subarea: string; cityname: string; statename: string }[] = [];
 
+  faqs: { question: string; answer: string }[] = [];
   activeIndex: number | null = null;
 
   frequentSearches: string[] = [];
   nearMeSearches: string[] = [];
   localitySearches: string[] = [];
   relatedSearches: string[] = [];
-  selectedCity: string = 'Mumbai';
-  cityCode: string = '';
-  subareas: any[] = [];
 
-  constructor(
-    private subareaService: SubareaService,
-    private commonService: CommonService
-  ) { }
+  displayLocation: string = 'Selected Location';
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getCityCode();
+    this.route.queryParams.subscribe(params => {
+      // Assuming the venue list is passed as a query param
+      this.selectedVenueList = this.parseParam(params['venue']) as { subarea: string; cityname: string; statename: string }[];
+      this.updateContent();
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedVenueList']) {
+      this.updateContent();
+    }
+  }
+
+  parseParam(param: string | undefined): any {
+    if (!param) return [];
+    try {
+      return JSON.parse(param);
+    } catch {
+      return [];
+    }
+  }
+
+  updateContent(): void {
+    this.updateDisplayLocation();
+    this.updateFaqs();
+    this.updateSearches();
+  }
+
+  updateDisplayLocation(): void {
+    if (this.selectedVenueList.length > 0) {
+      this.displayLocation = `${this.selectedVenueList[0].subarea}, ${this.selectedVenueList[0].cityname}`;
+    } else {
+      this.displayLocation = 'Unknown Location';
+    }
   }
 
   toggleAccordion(index: number): void {
     this.activeIndex = this.activeIndex === index ? null : index;
   }
 
-  getCityCode() {
-    const query = `?filterByDisable=false&filterByStatus=true&filterByName=${this.selectedCity}`;
-    this.commonService.getCities(query).subscribe(
-      data => {
-        if (data.data.items.length > 0) {
-          this.cityCode = data.data.items[0].id;
-          this.getSubareas();
-        }
+  updateFaqs(): void {
+    this.faqs = [
+      {
+        question: `Which are the famous banquet halls in ${this.selectedVenueList[0].cityname}?`,
+        answer: `Some famous banquet halls in ${this.displayLocation} include XYZ Banquet, ABC Hall, etc.`
       },
-      err => {
-        console.error('Error fetching city code:', err);
-      }
-    );
+      {
+        question: `How much does it cost to rent a banquet hall in ${this.selectedVenueList[0].subarea}?`,
+        answer: `The cost of renting a banquet hall in ${this.displayLocation} can range from 5000 to 50000 INR, depending on the location, size, and facilities.`
+      },
+      // Add more dynamic FAQs here
+    ];
   }
 
-  getSubareas() {
-    const query = `?filterByDisable=false&filterByStatus=true&filterByCityId=${this.cityCode}`;
-    this.subareaService.getSubareaList(query).subscribe(
-      data => {
-        this.subareas = data.data.items;
-        this.updateSearches();
-      },
-      err => {
-        console.error('Error fetching subareas:', err);
-      }
-    );
-  }
-
-  updateSearches() {
+  updateSearches(): void {
     this.frequentSearches = [
-      `Affordable Banquet Halls in ${this.selectedCity}`,
-      `Banquet Halls in ${this.selectedCity}`,
-      `AC Banquet Halls in ${this.selectedCity}`,
-      `Top Banquet Halls in ${this.selectedCity}`,
-      `Best Banquet Halls with price in ${this.selectedCity}`,
-      `Banquet Halls with review in ${this.selectedCity}`,
-      `Luxury Banquet Halls in ${this.selectedCity}`,
-      `Best Banquet Halls in ${this.selectedCity}`,
-      `List of Banquet Halls in ${this.selectedCity}`,
-      `Cheap Banquet Halls in ${this.selectedCity}`,
-      `Best banquets in ${this.selectedCity}`,
-      `Banquet Halls nearby ${this.selectedCity}`,
-      `Banquet Halls near ${this.selectedCity}`
+      `Affordable Banquet Halls in ${this.selectedVenueList[0].cityname}`,
+      `Banquet Halls in ${this.selectedVenueList[0].cityname}`,
+      `AC Banquet Halls in ${this.selectedVenueList[0].cityname}`,
+      `Top Banquet Halls in ${this.selectedVenueList[0].cityname}`,
+      `Best Banquet Halls with price in ${this.selectedVenueList[0].cityname}`,
+      `Affordable Banquet Halls in ${this.selectedVenueList[0].cityname}`,
+      `Banquet Halls in ${this.selectedVenueList[0].cityname}`,
+      `AC Banquet Halls in ${this.selectedVenueList[0].cityname}`,
+      `Top Banquet Halls in ${this.selectedVenueList[0].cityname}`,
+      `Best Banquet Halls with price in ${this.selectedVenueList[0].cityname}`,
+      // Add more dynamic frequent searches
     ];
 
-    this.nearMeSearches = [
-      'Affordable Banquet Halls near me',
-      'Banquet Halls near me',
-      'AC Banquet Halls near me',
-      'Top Banquet Halls near me',
-      'Best Banquet Halls with price near me',
-      'Banquet Halls with review near me',
-      'Luxury Banquet Halls near me',
-      'Best Banquet Halls near me',
-      'List of Banquet Halls near me',
-      'Cheap Banquet Halls near me',
-      'Best banquets near me',
-      `Banquet Halls nearby ${this.selectedCity}`,
-      `Banquet Halls near ${this.selectedCity}`
-    ];
+    // this.nearMeSearches = [
+    //   'Affordable Banquet Halls near me',
+    //   'Banquet Halls near me',
+    //   'AC Banquet Halls near me',
+    //   `Banquet Halls nearby ${this.displayLocation}`,
+    //   `Banquet Halls near ${this.displayLocation}`,
+    //   // Add more dynamic near me searches
+    // ];
 
     this.localitySearches = [
-        'Banquet Halls in thane',
-        'Banquet Halls in malad',
-        'Banquet Halls in navi mumbai',
-        'Banquet Halls in dadar',
-        'Banquet Halls in thane',
-        'Banquet Halls in andheri',
-        'Banquet Halls in dadar',
-        'Banquet Halls in mulund'
-      ];
-
-
-    this.relatedSearches = [
-      `Wedding Venues in ${this.selectedCity}`,
-      `Marriage Halls in ${this.selectedCity}`,
-      `Mantapa / Convention Hall in ${this.selectedCity}`,
-      `Wedding Lawns in ${this.selectedCity}`,
-      `Destination Wedding Venues in ${this.selectedCity}`,
-      `5 Star Wedding Hotels in ${this.selectedCity}`,
-      `Party Halls in ${this.selectedCity}`,
-      `Cocktail Venues in ${this.selectedCity}`,
-      `Birthday Party Halls in ${this.selectedCity}`,
-      `Party Plots in ${this.selectedCity}`,
-      `Terrace Banquet Halls in ${this.selectedCity}`,
-      `Corporate Event Venues in ${this.selectedCity}`,
-      `Wedding Resorts in ${this.selectedCity}`,
-      `Wedding Hotels in ${this.selectedCity}`,
-      `Villa / Farmhouse in ${this.selectedCity}`,
-      `Heritage Wedding Venues in ${this.selectedCity}`
+      `Banquet Halls in ${this.selectedVenueList[0].subarea}`,
+      `Banquet Halls in ${this.selectedVenueList[0].subarea}`,
+      `Banquet Halls in ${this.selectedVenueList[0].subarea}`,
+      `Banquet Halls in ${this.selectedVenueList[0].subarea}`,
+      `Banquet Halls in ${this.selectedVenueList[0].subarea}`,
+      `Banquet Halls in ${this.selectedVenueList[0].subarea}`,
+      `Banquet Halls in ${this.selectedVenueList[0].subarea}`,
+      `Banquet Halls in ${this.selectedVenueList[0].subarea}`,
+      `Banquet Halls in ${this.selectedVenueList[0].subarea}`,
+      // Add more dynamic locality searches
     ];
 
-    // this.localitySearches = this.subareas.map(subarea => `Banquet Halls in ${subarea.name}`);
-  }
-
-  onCityChange(city: string) {
-    this.selectedCity = city;
-    this.getCityCode();
+    this.relatedSearches = [
+      `Wedding Venues in ${this.selectedVenueList[0].cityname}`,
+      `Marriage Halls in ${this.selectedVenueList[0].cityname}`,
+      `Mantapa / Convention Hall in ${this.selectedVenueList[0].cityname}`,
+      `Wedding Lawns in ${this.selectedVenueList[0].cityname}`,
+      `Wedding Venues in ${this.selectedVenueList[0].cityname}`,
+      `Marriage Halls in ${this.selectedVenueList[0].cityname}`,
+      `Mantapa / Convention Hall in ${this.selectedVenueList[0].cityname}`,
+      `Wedding Lawns in ${this.selectedVenueList[0].cityname}`,
+      `Wedding Venues in ${this.selectedVenueList[0].cityname}`,
+      `Marriage Halls in ${this.selectedVenueList[0].cityname}`,
+      `Mantapa / Convention Hall in ${this.selectedVenueList[0].cityname}`,
+      `Wedding Lawns in ${this.selectedVenueList[0].cityname}`,
+      // Add more dynamic related searches
+    ];
   }
 }

@@ -256,34 +256,18 @@ export class ListComponent implements OnInit {
         let query = new URLSearchParams({
             admin: 'true',
             pageSize: (event.rows || 10).toString(),
-            pageNumber: (
-                (event.first || 0) / (event.rows || 10) +
-                1
-            ).toString(),
+            pageNumber: ((event.first || 0) / (event.rows || 10) + 1).toString(),
             filterByDisable: 'false'
         });
 
         if (this.searchby && this.startDate && this.endDate) {
             query.set('filterByDate', this.searchby.value);
-            query.set(
-                'filterByStartDate',
-                moment(this.startDate).format('YYYY-MM-DD')
-            );
-            query.set(
-                'filterByEndDate',
-                moment(this.endDate).format('YYYY-MM-DD')
-            );
+            query.set('filterByStartDate', moment(this.startDate).format('YYYY-MM-DD'));
+            query.set('filterByEndDate', moment(this.endDate).format('YYYY-MM-DD'));
         }
 
         const filterFields = [
-            'name',
-            'email',
-            'countryname',
-            'statename',
-            'cityname',
-            'zipcode',
-            'status',
-            'assured',
+            'name', 'email', 'countryname', 'statename', 'cityname', 'zipcode', 'status', 'assured'
         ];
         filterFields.forEach((field) => {
             if (event.filters && event.filters[field]) {
@@ -304,6 +288,18 @@ export class ListComponent implements OnInit {
                 // Filter out disabled venues
                 this.venueList = data.data.items.filter(venue => !venue.disable);
                 this.totalRecords = data.data.totalCount;
+
+                // **Apply Client-side Sorting**
+                if (event.sortField && event.sortOrder) {
+                    this.venueList.sort((a, b) => {
+                        const valueA = a[event.sortField] || '';
+                        const valueB = b[event.sortField] || '';
+
+                        if (valueA < valueB) return event.sortOrder === 1 ? -1 : 1;
+                        if (valueA > valueB) return event.sortOrder === 1 ? 1 : -1;
+                        return 0;
+                    });
+                }
             },
             (err) => {
                 console.error('Error fetching venue list:', err);

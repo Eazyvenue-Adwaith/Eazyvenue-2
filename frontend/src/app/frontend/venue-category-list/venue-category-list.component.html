@@ -508,15 +508,15 @@
                     <div class="sidebar Filter-siderbar sidebar-left">
                         <div class="sidebar-widget">
                             <p-accordion>
-                                <p-accordionTab
+                                <!-- <p-accordionTab
                                     header="Budget"
                                     class="filter-head-text"
                                     [selected]="true"
                                     style="margin-top: -10px"
-                                >
-                                    <!-- <ngx-slider [(value)]="minValue" [(highValue)]="maxValue"
+                                > -->
+                                <!-- <ngx-slider [(value)]="minValue" [(highValue)]="maxValue"
                                     [options]="priceSliderOptions"></ngx-slider> -->
-                                    <div
+                                <!-- <div
                                         *ngIf="
                                             venuePriceRangeValues != undefined
                                         "
@@ -530,16 +530,16 @@
                                                 "
                                             >
                                                 Min :
-                                                <span class="text-center">
-                                                    <!-- {{' ₹ ' +  rangeValues[0]}} -->
-                                                    {{
+                                                <span class="text-center"> -->
+                                <!-- {{' ₹ ' +  rangeValues[0]}} -->
+                                <!-- {{
                                                         " ₹ " +
                                                             venuePriceRangeValues[0]
                                                     }}
                                                 </span>
-                                            </h5>
-                                        </div>
-                                        <div class="max-heading">
+                                            </h5> -->
+                                <!-- </div> -->
+                                <!-- <div class="max-heading">
                                             <h5
                                                 style="
                                                     font-size: 12px !important;
@@ -547,9 +547,9 @@
                                                 "
                                             >
                                                 Max :
-                                                <span class="text-center">
-                                                    <!-- {{ ' ₹ ' + rangeValues[1]}} -->
-                                                    {{
+                                                <span class="text-center"> -->
+                                <!-- {{ ' ₹ ' + rangeValues[1]}} -->
+                                <!-- {{
                                                         " ₹ " +
                                                             venuePriceRangeValues[1]
                                                     }}
@@ -563,15 +563,16 @@
                                         [step]="1000"
                                         [min]="venuePriceRangeValues[0]"
                                         [max]="venuePriceRangeValues[1]"
-                                    ></p-slider>
-                                    <!-- <p-slider [(ngModel)]="venuePriceRangeValues" [range]="true"></p-slider> -->
-                                    <div class="price-input">
+                                    ></p-slider> -->
+                                <!-- <p-slider [(ngModel)]="venuePriceRangeValues" [range]="true"></p-slider> -->
+                                <!-- <div class="price-input">
                                         <!-- <form> -->
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <!-- <input type="number" class="form-control" id="inputEmail4"
+                                <!-- <div class="form-row">
+                                            <div class="form-group col-md-6"> -->
+                                -->
+                                <!-- <input type="number" class="form-control" id="inputEmail4"
                                                 placeholder="{{ venuePriceRangeValues[0]}}" value="{{ venuePriceRangeValues[0]}}"> -->
-                                                <input
+                                <!-- <input
                                                     *ngIf="
                                                         venuePriceRangeValues !=
                                                         undefined
@@ -624,11 +625,11 @@
                                                     "
                                                 />
                                             </div>
-                                        </div>
-                                        <!-- <h3
+                                        </div> -->
+                                <!-- <h3
                                         style="color: #69707a;font-size: 14px;text-align: center;margin-bottom: 0px;">
                                         Per pax cost</h3> -->
-                                        <div class="perpax-cost">
+                                <!-- <div class="perpax-cost">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="min-heading">
@@ -663,8 +664,8 @@
                                                                 }}</span
                                                             >
                                                         </p>
-                                                        <!-- {{' ₹ ' + venuePriceRangeValues[0]}} -->
-                                                    </div>
+                                                        {{' ₹ ' + venuePriceRangeValues[0]}} -->
+                                <!-- </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="max-heading">
@@ -697,16 +698,16 @@
                                                                         )
                                                                 }}</span
                                                             >
-                                                        </p>
-                                                        <!-- {{ ' ₹ ' + venuePriceRangeValues[1]}} -->
-                                                    </div>
+                                                        </p> -->
+                                <!-- {{ ' ₹ ' + venuePriceRangeValues[1]}} -->
+                                <!-- </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
-                                        <!-- </form> -->
-                                    </div>
-                                </p-accordionTab>
+                                <!-- </form> -->
+                                <!-- </div>
+                                </p-accordionTab> -->
                                 <!-- <p-accordionTab header="Occasions" [selected]="true"> -->
                                 <!-- <div class="slider-Occasions">
                                         <div class="Occasions-fillter">
@@ -1879,8 +1880,8 @@
                 </div>
             </div>
             <section class="faq-section">
-                <app-faq></app-faq>
-              </section>
+                <app-faq [selectedVenueList]="finalVenueList"></app-faq>
+            </section>
         </div>
     </div>
 </div>
