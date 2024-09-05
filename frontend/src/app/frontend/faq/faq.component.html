@@ -21,8 +21,8 @@
       <div class="search-results">
         <h2>Frequent Searches Leading To This Page</h2>
         <div class="search-list">
-          <span *ngFor="let search of frequentSearches">{{ search }}</span>
-        </div>
+            <a *ngFor="let search of frequentSearches" href="javascript:void(0);" (click)="onSearchClick()" class="search-link">{{ search }}</a>
+          </div>
 
         <!-- <h2>Similar Near Me Searches</h2>
         <div class="search-list">
@@ -31,13 +31,13 @@
 
         <h2>Find Banquet Halls In Localities In {{ this.selectedVenueList[0].cityname}}</h2>
         <div class="search-list">
-          <span *ngFor="let search of localitySearches">{{ search }}</span>
-        </div>
+            <a *ngFor="let search of localitySearches" href="javascript:void(0);" (click)="onSearchClick()" class="search-link">{{ search }}</a>
+          </div>
 
         <h2>Other Related Searches</h2>
         <div class="search-list">
-          <span *ngFor="let search of relatedSearches">{{ search }}</span>
-        </div>
+            <a *ngFor="let search of relatedSearches" href="javascript:void(0);" (click)="onSearchClick()" class="search-link">{{ search }}</a>
+          </div>
       </div>
     </div>
   </section>

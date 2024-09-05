@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-faq',
@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./faq.component.scss']
 })
 export class FaqComponent implements OnInit, OnChanges {
-  @Input() selectedVenueList: { subarea: string; cityname: string; statename: string }[] = [];
+  @Input() selectedVenueList: { subarea: string; cityname: string; statename: string; id: string }[] = [];
 
   faqs: { question: string; answer: string }[] = [];
   activeIndex: number | null = null;
@@ -19,12 +19,11 @@ export class FaqComponent implements OnInit, OnChanges {
 
   displayLocation: string = 'Selected Location';
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      // Assuming the venue list is passed as a query param
-      this.selectedVenueList = this.parseParam(params['venue']) as { subarea: string; cityname: string; statename: string }[];
+      this.selectedVenueList = this.parseParam(params['venue']) as { subarea: string; cityname: string; statename: string; id: string }[];
       this.updateContent();
     });
   }
@@ -128,5 +127,13 @@ export class FaqComponent implements OnInit, OnChanges {
       `Wedding Lawns in ${this.selectedVenueList[0].cityname}`,
       // Add more dynamic related searches
     ];
+  }
+  onSearchClick(): void {
+    console.log('Search clicked, navigating to /banquet-halls/wedding');
+    this.router.navigate(['/banquet-halls/wedding']).then(() => {
+      console.log('Navigation complete');
+    }).catch(error => {
+      console.error('Navigation error:', error);
+    });
   }
 }
