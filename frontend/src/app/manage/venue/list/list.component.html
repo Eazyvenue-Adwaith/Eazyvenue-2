@@ -166,7 +166,7 @@
                     [rowHover]="true"
                     dataKey="_id"
                     styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped"
-                    [rowsPerPageOptions]="paginationOption"
+                    [rowsPerPageOptions]="rowsPerPageOptions"
                     [lazy]="true"
                     (onLazyLoad)="refreshVenueList($event)"
                     [totalRecords]="totalRecords"
@@ -489,43 +489,22 @@
                             <td>
                                 <span class="p-column-title">Status</span>
                                 <span *ngIf="venue.status">
-                                    <p-tag
-                                        styleClass="mr-2"
-                                        severity="success"
-                                        value="Active"
-                                    ></p-tag>
+                                    <p-tag styleClass="mr-2" severity="success" value="Active"></p-tag>
                                 </span>
                                 <span *ngIf="!venue.status">
-                                    <p-tag
-                                        severity="danger"
-                                        value="In-Active"
-                                    ></p-tag>
+                                    <p-tag severity="danger" value="In-Active"></p-tag>
                                 </span>
-                                <p-inputSwitch
-                                    [(ngModel)]="venue.status"
-                                    (onChange)="changeStatus(venue)"
-                                ></p-inputSwitch>
+                                <p-inputSwitch [(ngModel)]="venue.status" (onChange)="changeStatus(venue)"></p-inputSwitch>
                             </td>
                             <td>
                                 <span class="p-column-title">Assured</span>
                                 <span *ngIf="venue.assured">
-                                    <p-tag
-                                        styleClass="mr-2"
-                                        severity="success"
-                                        value="Assured"
-                                    ></p-tag>
+                                    <p-tag styleClass="mr-2" severity="success" value="Assured"></p-tag>
                                 </span>
                                 <span *ngIf="!venue.assured">
-                                    <p-tag
-                                        styleClass="mr-2"
-                                        severity="danger"
-                                        value="Not Assured"
-                                    ></p-tag>
+                                    <p-tag styleClass="mr-2" severity="danger" value="Not Assured"></p-tag>
                                 </span>
-                                <p-inputSwitch
-                                    [(ngModel)]="venue.assured"
-                                    (onChange)="changeAssured(venue)"
-                                ></p-inputSwitch>
+                                <p-inputSwitch [(ngModel)]="venue.assured" (onChange)="changeAssured(venue)"></p-inputSwitch>
                             </td>
                             <td>
                                 <span class="p-column-title">Action</span>

@@ -107,7 +107,7 @@
 </div>
 
 <div class="book-btn row justify-content-center">
-  
+
     <!-- <div class="col-12 text-center">
         <p-button *ngIf="!showAvailabilityMessage" class="detailsfilter" (click)="venueDetailfilter()" >{{!showAvailabilityMessage}} Book Now</p-button>
         <p-button *ngIf="showAvailabilityMessage" class="detailsfilter" (click)="venueDetailfilter()" label="Send Enquiries"></p-button>
@@ -138,18 +138,18 @@
                     </div>
                     <div class="col-4 detail-page-top-buttons">
                         <div class="row">
-                          
+
                            <div class="col-6 pl-0 text-right">
                             <p-button *ngIf="!showAvailabilityMessage" class="venuedetailbook" (click)="venueDetailfilter()" > Book Now</p-button>
-                            <p-button *ngIf="showAvailabilityMessage" class="venuedetailbook" (click)="venueDetailfilter()" > Send Enquiries</p-button> 
+                            <p-button *ngIf="showAvailabilityMessage" class="venuedetailbook" (click)="venueDetailfilter()" > Send Enquiries</p-button>
                            </div>
                            <div class="col-6 text-left">
                             <p-button class="venuedetailfilter" (click)="showVenueDetailSearch()"> Search</p-button>
                         </div>
                         </div>
-                       
+
                         <!-- <p-button class="venuedetailbook" (click)="venueDetailfilter()"> Book Now</p-button> -->
-                       
+
                     </div>
                 </div>
             </div>
@@ -260,7 +260,7 @@
                                 </p-avatarGroup>
                             </div> -->
                         </div>
-                      
+
                         <div class="left-side-body">
                             <p-galleria id="venue-images-gallery" [(value)]="venueDetails.venueImage"
                                 [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '100%;'}"
@@ -282,7 +282,7 @@
                                 </ng-template>
                             </p-galleria>
                         </div>
-                        
+
                         <div class="about-section">
                             <div *ngIf="venueDetails" class="col-md-12">
                                 <div class="row justify-content-between">
@@ -804,12 +804,49 @@
                                                                 </ul>
                                                             </div>
                                                             <!--Customer-text-review-->
+                                                            .<div class="customer-comment">
+                                                                <h5 class="reviews-heading">Venue Ambiance & Service</h5>
+                                                               <p>We recently hosted our wedding at  <span style="font-weight: 500;">{{venueDetails.name}}</span>, and it was absolutely stunning! The ambiance of the hall was perfect, and the service from the staff was exceptional. Our guests loved it!.</p>
+                                                               </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="reviw-user-main">
+                                                        <div class="review-comment-show">
+                                                            <div class="media">
+                                                                <img class="align-self-center mr-3"
+                                                                    src="assets/images/category-icons/user-icon.svg"
+                                                                    alt="customer-profile">
+                                                                <div class="media-body reviews-comment">
+                                                                    <div class="customer-name">
+                                                                        <h4>Ivonne Andrea</h4>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="rateing-star-customer">
+                                                                <ul>
+                                                                    <li>
+                                                                        <span><i class="pi pi-star-fill"></i></span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <span><i class="pi pi-star-fill"></i></span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <span><i class="pi pi-star-fill"></i></span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <span><i class="pi pi-star-fill"></i></span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <span><i class="pi pi-star-fill"></i></span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <!--Customer-text-review-->
                                                             <div class="customer-comment">
-                                                                <h5 class="reviews-heading">The Best!</h5>
-                                                                <p>Hello everyone. I just want to tell you that so far
-                                                                    it has
-                                                                    been an excellent experience for me. The best online
-                                                                    venues booking website without hesitation.</p>
+                                                                <h5 class="reviews-heading">Perfect for Grand Celebrations
+                                                                </h5>
+                                                                <p>We chose <span style="font-weight: 500;">{{venueDetails.name}}</span> for our big day, and we couldn't be happier! The space was huge, and the decor was exactly how we imagined. Eazyvenue made it super easy to coordinate everything</p>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -847,11 +884,9 @@
                                                             </div>
                                                             <!--Customer-text-review-->
                                                             <div class="customer-comment">
-                                                                <h5 class="reviews-heading">The Best!</h5>
-                                                                <p>Hello everyone. I just want to tell you that so far
-                                                                    it has
-                                                                    been an excellent experience for me. The best online
-                                                                    venues booking website without hesitation.</p>
+                                                                <h5 class="reviews-heading">Excellent Location & Facilities
+                                                                </h5>
+                                                                <p>We booked <span style="font-weight: 500;">{{venueDetails.name}}</span> for our reception, and it was the perfect venue. The location was easy to access for all our guests, and the facilities were top-notch. Highly recommend it for large gatherings.</p>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -889,53 +924,8 @@
                                                             </div>
                                                             <!--Customer-text-review-->
                                                             <div class="customer-comment">
-                                                                <h5 class="reviews-heading">The Best!</h5>
-                                                                <p>Hello everyone. I just want to tell you that so far
-                                                                    it has
-                                                                    been an excellent experience for me. The best online
-                                                                    venues booking website without hesitation.</p>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="reviw-user-main">
-                                                        <div class="review-comment-show">
-                                                            <div class="media">
-                                                                <img class="align-self-center mr-3"
-                                                                    src="assets/images/category-icons/user-icon.svg"
-                                                                    alt="customer-profile">
-                                                                <div class="media-body reviews-comment">
-                                                                    <div class="customer-name">
-                                                                        <h4>Ivonne Andrea</h4>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="rateing-star-customer">
-                                                                <ul>
-                                                                    <li>
-                                                                        <span><i class="pi pi-star-fill"></i></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span><i class="pi pi-star-fill"></i></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span><i class="pi pi-star-fill"></i></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span><i class="pi pi-star-fill"></i></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span><i class="pi pi-star-fill"></i></span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <!--Customer-text-review-->
-                                                            <div class="customer-comment">
-                                                                <h5 class="reviews-heading">The Best!</h5>
-                                                                <p>Hello everyone. I just want to tell you that so far
-                                                                    it has
-                                                                    been an excellent experience for me. The best online
-                                                                    venues booking website without hesitation.</p>
+                                                                <h5 class="reviews-heading">Great Value for Money</h5>
+                                                                <p><span style="font-weight: 500;">{{venueDetails.name}}</span> offers amazing value for money! We had a beautiful wedding, complete with stunning decor and an elegant setup, all within our budget. Eazyvenue made the booking process effortless.</p>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -1048,18 +1038,18 @@
                                             </div>
                                         </div>
                                     </p-accordionTab>
-                                    
-                                    <p-accordionTab header="Guest Count"> 
+
+                                    <p-accordionTab header="Guest Count">
                                         <ng-template pTemplate="header">
                                             <i class="pi pi-info-circle info-icon ml-2" pTooltip="Specify the minimun number of guests attending" tooltipPosition="bottom" showDelay="100" hideDelay="100"></i>
                                             <div *ngIf="selectedVenueCapacity != undefined" class="p-0">
                                                 <span class="selected-list"> : {{selectedVenueCapacity}}</span>
                                             </div>
-                                          
+
                                         </ng-template>
                                                 <p-dropdown class="" [options]="filterGuestArray" placeholder="Guest Count" optionLabel="label"
                                                 [(ngModel)]="selectedVenueCapacity" (onChange)="onCapacitySelect($event.value)"
-                                                [editable]="true" class="guest-count-dpd"></p-dropdown> 
+                                                [editable]="true" class="guest-count-dpd"></p-dropdown>
                                     </p-accordionTab>
                                     <p-accordionTab header="Time Slot" class="time-slot-tab">
                                     <ng-template pTemplate="header">
@@ -1071,9 +1061,9 @@
                                             <span class="selected-list">{{selectedSlotsName}}</span>
 
                                         </ng-template>
- 
+
                                         <div class="col-md-12 p-0 time-slots">
-                                            
+
                                             <p-tabView *ngIf="slotList.length>0" header="Time Slot">
                                                 <div class="row text-center">
                                                     <div class="col text-center" *ngFor="let slot of slotList">
@@ -1188,7 +1178,7 @@
                                                         (click)="onClickDecor(decor)"></p-radioButton> -->
                                                 </div>
                                             </div>
-                                          
+
                                         </div>
                                         <div *ngIf="!isLoggedIn" class="col price-list">
                                             <h5>Login to see prices</h5>
@@ -1196,7 +1186,7 @@
                                     </p-accordionTab>
                                 </p-accordion>
                             </div>
-                           
+
                             <div class="col-md-12 total-amount-div">
                                 <div class="row">
                                     <div class="col">
@@ -1207,9 +1197,9 @@
                                         <h4 style="font-size: 1.2rem !important;" *ngIf="selectedVenueCapacity>0" class="total-price text-right">
                                             {{totalFoodPrice|currency:'INR'}}</h4>
                                             <h4 style="font-size: 1.2rem !important;" *ngIf="selectedDecorPrice>0" class="total-price text-right">
-                                                {{selectedDecorPrice|currency:'INR'}}</h4>   
+                                                {{selectedDecorPrice|currency:'INR'}}</h4>
                                             <h4 style="font-size: 1.2rem !important;" *ngIf="premiumDecor" class="total-price text-right">
-                                                Call for prices</h4>   
+                                                Call for prices</h4>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -1224,7 +1214,7 @@
                                         <div *ngIf="venueDetails && isLoggedIn" class="price">
                                             <h4 *ngIf="selectedVenueCapacity>0" class="total-price">
                                                 {{totalVenuePrice|currency:'INR'}}</h4>
-                                               
+
                                             <!-- <span class="real-price">₹ 3,00,000</span> -->
                                         </div>
                                     </div>
@@ -1239,10 +1229,36 @@
                                 </span>
                                 <!-- <input pInputText type="text" placeholder="Enter Coupon Code" class="coupon-input" [(ngModel)]="value2" /> -->
                             </div>
-                          
+
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <div class="total-amt-heading">
+                                        <h4>Custom amount</h4>
+                                    </div>
+                                    <!-- <span *ngIf="isLoggedIn">{{totalVenuePrice|currency:'INR'}}</span> -->
+                                </div>
+                                <div class="col">
+                                    <div *ngIf="venueDetails && isLoggedIn" class="price">
+                                        <h4 *ngIf="selectedVenueCapacity>0" class="total-price">
+                                            {{totalVenuePrice|currency:'INR'}}</h4>
+
+                                        <!-- <span class="real-price">₹ 3,00,000</span> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-md-12 coupon-code">
+                                <span class="p-input-icon-left">
+                                    <i class="coupon-icon"><img src="assets/images/icons/money.png"
+                                            class="icon-size"></i>
+                                    <input class="coupon-input coupon-box" placeholder="Enter Custom Amount" type="number"
+                                        pInputText [(ngModel)]="value1" />
+                                </span>
+                                <!-- <input pInputText type="text" placeholder="Enter Coupon Code" class="coupon-input" [(ngModel)]="value2" /> -->
+                            </div>
+
                             <div class="col-md-12 Send-btn">
                                 <button *ngIf="!showAvailabilityMessage" (click)="onClickSendEnquiries('book_now')"
-                                    pButton class="btn btn-custom w-100 price-btn">Book Now {{5000 | currency:'INR'}}
+                                    pButton class="btn btn-custom w-100 price-btn">Reserve For {{5000 | currency:'INR'}}
                                     <!-- {{bookingPrice|currency:'INR'}} -->
                                 </button>
                                 <button *ngIf="showAvailabilityMessage" (click)="onClickSendEnquiries('send_enquires')"
@@ -1459,7 +1475,7 @@
             </p-tabPanel>
         </p-tabView>
     </div> -->
-<!-- </p-dialog> --> 
+<!-- </p-dialog> -->
 <!-- login popup -->
 
 
@@ -1512,15 +1528,15 @@
                     <div class="custom-input-box">
                         <p>First Name: </p>
                         <div class="">
-                            <input type="text" pInputText [(ngModel)]="userFirstName" class="custom-input" name="userFirstName" (input)="validateFirstName()" #userFirstNameInput="ngModel" placeholder="First name" required minlength="3"> 
+                            <input type="text" pInputText [(ngModel)]="userFirstName" class="custom-input" name="userFirstName" (input)="validateFirstName()" #userFirstNameInput="ngModel" placeholder="First name" required minlength="3">
                             <div *ngIf="firstNameError" style="font-size: 8px; color: red;margin: 0; padding: 0;">First Name is required.</div>
                         </div>
-                        
+
                     </div>
                     <div class="custom-input-box">
                         <p>Last Name: </p>
                         <div class="">
-                        <input type="text" pInputText [(ngModel)]="userLastName" name="userLastName" class="custom-input"  (input)="validateLastName()"  #userLastNameInput="ngModel" placeholder="Last name" required minlength="3"> 
+                        <input type="text" pInputText [(ngModel)]="userLastName" name="userLastName" class="custom-input"  (input)="validateLastName()"  #userLastNameInput="ngModel" placeholder="Last name" required minlength="3">
                         <div *ngIf="lastNameError" style="font-size: 8px; color: red;margin: 0; padding: 0;">Last Name is required.</div>
                         <!-- <div *ngIf="userLastNameInput.invalid && (userLastNameInput.dirty || userLastNameInput.touched)">
                             <div *ngIf="userLastNameInput.errors.required" style="font-size: 8px; color: red;">Last Name is required.</div>
@@ -1586,7 +1602,7 @@
             </h5>
         </form>
     </div>
-</p-dialog> 
+</p-dialog>
 
 
 <!-- login popup end -->
@@ -1848,16 +1864,16 @@
                                 </div>
                             </div>
                         </div> -->
-                        <p-accordionTab header="Guest Count"> 
+                        <p-accordionTab header="Guest Count">
                             <ng-template pTemplate="header">
                                 <div *ngIf="selectedVenueCapacity != undefined" class="p-0">
                                     <span class="selected-list"> : {{selectedVenueCapacity}}</span>
                                 </div>
-                              
+
                             </ng-template>
                                     <p-dropdown class="" [options]="filterGuestArray" placeholder="Guest Count" optionLabel="label"
                                     [(ngModel)]="selectedVenueCapacity" (onChange)="onCapacitySelect($event.value)"
-                                    [editable]="true" class="guest-count-dpd"></p-dropdown> 
+                                    [editable]="true" class="guest-count-dpd"></p-dropdown>
                         </p-accordionTab>
                         <p-accordionTab header="Time Slot" class="time-slot-tab">
                             <ng-template pTemplate="header">
@@ -2314,7 +2330,7 @@
                         <img src="assets/images/svg-icons/guest-icon.svg">
                     </label>
                     <p-dropdown  appendTo="modal" [options]="filterGuestArray" placeholder="Guest Count" optionLabel="label"
-                        [(ngModel)]="selectedVenueCapacity" (onChange)="onCapacitySelect($event.value)" 
+                        [(ngModel)]="selectedVenueCapacity" (onChange)="onCapacitySelect($event.value)"
                         [editable]="true"  [style]="{ 'background-color': 'white'}"></p-dropdown>
                     <!-- <p-button [label]="selectedProduct ? selectedProduct.name : 'Guest Count'"
                     (click)="op.toggle($event)"></p-button> -->
@@ -2384,7 +2400,7 @@
 </p-dialog>
 
 
-<p-dialog [header]="orderType === 'book_now' ? 'Venue Booking Summary' : 'Venue Inquiry Summary'" 
+<p-dialog [header]="orderType === 'book_now' ? 'Venue Booking Summary' : 'Venue Inquiry Summary'"
           [(visible)]="isBookingSummary" [modal]="true" class="booking-modal"
 
 [draggable]="false" [resizable]="false">
@@ -2453,8 +2469,8 @@
                     </div>
                     <div class="total-amt-heading" *ngIf="premiumDecor">
                         <h4>Decor Amount : <span style="color: #ec3539;">
-                        Call for prices</span></h4>  
-                    </div> 
+                        Call for prices</span></h4>
+                    </div>
                     <div class="total-amt-heading" *ngIf="selectedDecorPrice>0">
                         <h4>Decor Amount : <span style="color: #ec3539;">{{selectedDecorPrice|currency:"INR"}}</span></h4>
                     </div>

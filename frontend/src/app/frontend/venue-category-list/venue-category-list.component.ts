@@ -21,6 +21,7 @@ import { VenueOrderService } from 'src/app/services/venueOrder.service';
 import { NgxOtpInputComponent, NgxOtpInputConfig } from 'ngx-otp-input';
 import { VendorService } from 'src/app/services/vendor.service';
 import { Meta, Title } from '@angular/platform-browser';
+import { FaqComponent } from '../faq/faq.component';
 
 interface City {
     name: string;
@@ -111,7 +112,8 @@ export class VenueCategoryListComponent {
     public pagination = environment.pagination;
     downloadFlg: boolean = false;
     pageSize = 10;
-    currentpage = 2;
+    currentpage = 1;
+    currentPage = 10;
     private lazyLoadEvent: LazyLoadEvent;
     public allVenueList: any[] = [];
     responsiveOptions: any[] = [
@@ -231,6 +233,7 @@ export class VenueCategoryListComponent {
     };
     @ViewChild('minVenuePriceInput') minVenuePriceInput: ElementRef;
     @ViewChild('maxVenuePriceInput') maxVenuePriceInput: ElementRef;
+    @ViewChild('faqComponent') faqComponent!: FaqComponent;
     @ViewChild('searchCalendar', { static: true }) datePicker;
     @ViewChild('searchCalendarMobile', { static: true }) datePickerMobile;
     seatingCapacityId: any;
@@ -1539,6 +1542,28 @@ export class VenueCategoryListComponent {
 
         })
     }
+
+    getPreviousVenues() {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+          this.loadVenues('previous');
+        }
+      }
+
+      getNextVenues() {
+        if ((this.currentPage * this.pageSize) < this.totalRecords) {
+          this.currentPage++;
+          this.loadVenues('next');
+        }
+      }
+
+      loadVenues(mode: string) {
+        const event: LazyLoadEvent = {
+          first: (this.currentPage - 1) * this.pageSize,
+          rows: this.pageSize
+        };
+        this.getVenueList(event, mode);
+      }
     getVenueList(event: LazyLoadEvent, mode) {
         // console.log(this.selectedAmenitiesNew);
         console.log(event);

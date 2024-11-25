@@ -94,7 +94,7 @@ function clientErrorHandler(err, req, res, next) {
   }
 }
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const auth = passport.authenticate('jwt', { session: false });

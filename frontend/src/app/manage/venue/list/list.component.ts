@@ -69,6 +69,7 @@ export class ListComponent implements OnInit {
     minYear = environment.minYear;
     startDate: Date;
     endDate: Date;
+    rowsPerPageOptions: number[] = [10, 50, 100];
     statuses: any[];
     assuredlist: any[];
     cmsmoduleDialog: boolean;
@@ -256,7 +257,7 @@ export class ListComponent implements OnInit {
         let query = new URLSearchParams({
             admin: 'true',
             pageSize: (event.rows || 10).toString(),
-            pageNumber: ((event.first || 0) / (event.rows || 10) + 1).toString(),
+            pageNumber: ((event.first || 0) / (event.rows || 10) + 2).toString(),
             filterByDisable: 'false'
         });
 

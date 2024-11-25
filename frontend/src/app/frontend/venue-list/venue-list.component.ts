@@ -210,7 +210,7 @@ export class VenueListComponent implements OnInit {
           inputSuccess: 'my-super-success-class',
           inputError: 'my-super-error-class',
         },
-      };      
+      };
     displayBasic: boolean | undefined;
     venueImages: any[] = [];
     public otp: string;
@@ -371,7 +371,7 @@ export class VenueListComponent implements OnInit {
     ngOnInit() {
         const canonicalLink = this.renderer.createElement('link');
         this.renderer.setAttribute(canonicalLink, 'rel', 'canonical');
-        this.renderer.setAttribute(canonicalLink, 'href', window.location.href); 
+        this.renderer.setAttribute(canonicalLink, 'href', window.location.href);
         this.renderer.appendChild(document.head, canonicalLink);
         this.minDateValue = new Date();
         this.filterCapacityArray = [
@@ -473,7 +473,7 @@ export class VenueListComponent implements OnInit {
         this.meta.addTag({name:"description",content:"Discover Your Perfect Event Venue with EazyVenue.com, Explore exquisite banquet halls specially curated for weddings, parties, and corporate gatherings. Our diverse spaces ensure your events are unforgettable."})
         this.meta.addTag({name:"keywords",content:"banquet halls, Best banquet halls near me, wedding banquet halls,party halls, marriage halls near me"})
         this.meta.addTag({ name: 'robots', content: 'index, follow' });
-                
+
     }
     getAllVenueList() {
         let query = "filterByDisable=false&filterByStatus=true&filterByAssured=true";
@@ -481,7 +481,7 @@ export class VenueListComponent implements OnInit {
         this.venueService.getVenueListAllVenues().subscribe(
             data => {
                 // console.log(data);
-                
+
                 //if (data.data.items.length > 0) {
                 this.allVenueList = data.data.items;
                 //}
@@ -498,7 +498,7 @@ export class VenueListComponent implements OnInit {
                     // this.categoryMenuList = data.data;
                 this.categoryMenuList = data.data.filter( o => o.name !== "Couple Dates" && o.name !== "Castles")
                 // console.log(this.categoryMenuList);
-                
+
                 // this.occasionList = data.data.items;
                 // this.selectedCategoryId = this.categoryMenuList[0].id;
                 let index = this.categoryMenuList.findIndex(x => x.id === this.selectedCategoryId);
@@ -562,6 +562,7 @@ export class VenueListComponent implements OnInit {
             let selectedCities = JSON.stringify(this.selectedCities);
             let selectedSubareaIds = JSON.stringify(this.selectedSubareaIds);
             let selectedVenueIds = JSON.stringify(this.selectedVenueIds);
+
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
             this.router.onSameUrlNavigation = 'reload';
             this.router.navigate(
@@ -608,7 +609,7 @@ export class VenueListComponent implements OnInit {
         this.cityService.getcityList("list=true").subscribe(
             data => {
                 // console.log(data);
-                
+
                 this.cityList = data.data.items;
             },
             err => {
@@ -635,7 +636,7 @@ export class VenueListComponent implements OnInit {
         this.direction = "down";
         //dialog show
         // console.log('show');
-        
+
         this.getVenueList();
     }
     onClickCalendarClose() {
@@ -696,7 +697,7 @@ export class VenueListComponent implements OnInit {
         // console.log(this.capacity);
         // console.log(this.startDate);
         // console.log(this.endDate);
-        
+
 
         let params = "";
         let rows = 10;
@@ -733,7 +734,7 @@ export class VenueListComponent implements OnInit {
             newQuery += "&guestCount=" + this.capacity;
         }
         this.selectedVenueIds.forEach(element => {
-            newQuery += "&venueIds="+element; 
+            newQuery += "&venueIds="+element;
         });
         this.selectedSubareaIds.forEach(element => {
             newQuery+= "&subareaid="+element;
@@ -748,11 +749,11 @@ export class VenueListComponent implements OnInit {
         if(this.endDate != null){
             newQuery += "&endSearchDate="+this.endDate
         }
-        
+
         // console.log(newQuery);
 
 
-        
+
 
         this.venueService.getVenueListForFilter(newQuery).subscribe(
         // this.venueService.getVenueListWithoutAuth(query).subscribe(
@@ -872,7 +873,7 @@ export class VenueListComponent implements OnInit {
         this.venueService.getHomeMenuFilter().subscribe(res =>{
             this.groupedMenuList = res.data;
             // console.log(this.groupedMenuList);
-            
+
         },err => {
 
         })
@@ -893,7 +894,7 @@ export class VenueListComponent implements OnInit {
         //                             occasionListData => {
         //                                 this.groupedMenuList.push({ label: "Occasion", value: "Occasion", items: occasionListData.data.items })
         //                                 console.log(this.groupedMenuList);
-                                        
+
         //                             },
         //                             occasionListErr => {
         //                                 this.errorMessage = occasionListErr.error.message;
@@ -1072,7 +1073,7 @@ export class VenueListComponent implements OnInit {
     // }
     getVenueDetails(id) {
         // console.log(id);
-        
+
         this.venueId = id;
         this.urlMode = "venue_details";
         if (this.isLoggedIn == false) {
@@ -1209,14 +1210,14 @@ export class VenueListComponent implements OnInit {
         this.authService.otpLogin(data).subscribe(
             (res:any) => {
                 // console.log(res);
-                
+
                 if (mode !== 'resendOtp') {
                     this.otpPopup = true;
                 }
                 this.oldUser = {
                     userType: res.firstName === '' ? 'new' : 'old',
                     firstName: res.firstName,
-                    lastName: res.lastName,                    
+                    lastName: res.lastName,
                 }
                 //this.mobileForm.reset();
                 this.submitted = false;
@@ -1242,12 +1243,12 @@ export class VenueListComponent implements OnInit {
             const txt2 = document.getElementById("txt2") as HTMLInputElement;
             const txt3 = document.getElementById("txt3") as HTMLInputElement;
             const txt4 = document.getElementById("txt4") as HTMLInputElement;
-    
+
             txt1.value = val.charAt(0) || ''
             txt2.value = val.charAt(1) || ''
             txt3.value = val.charAt(2) || ''
             txt4.value = val.charAt(3) || ''
-    
+
             txt4.focus();
         }
     }
@@ -1255,14 +1256,14 @@ export class VenueListComponent implements OnInit {
           let length = c.value.length;
           this.showOtpErrors = false;
           let maxLength = 1;
-      
+
           if (length === maxLength) {
             this.otpArray[i] = c.value;
             if (n !== '') {
               n.focus();
             }
           }
-      
+
           if (e.key === 'Backspace') {
             this.otpArray[i] = '';
             if (p !== '') {
@@ -1270,7 +1271,7 @@ export class VenueListComponent implements OnInit {
             }
           }
       }
-      
+
     onOtpChange(otp) {
         this.showOtpErrors = false;
         if (otp[0]) {
@@ -1388,9 +1389,9 @@ export class VenueListComponent implements OnInit {
         txt2.value = '';
         txt3.value = '';
         txt4.value = '';
-         
+
         this.otp = '';
-        this.otpArray = [] 
+        this.otpArray = []
     }
     otpTimer(counter, tick) {
         this.countDown = timer(0, this.tick)
@@ -1427,7 +1428,7 @@ export class VenueListComponent implements OnInit {
         txt2.value = '';
         txt3.value = '';
         txt4.value = '';
-        this.otpArray = [] 
+        this.otpArray = []
     }
     showLoginRegisterDialog() {
         if (this.isLoggedIn == true) {

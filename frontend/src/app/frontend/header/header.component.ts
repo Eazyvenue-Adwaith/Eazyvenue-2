@@ -25,6 +25,7 @@ import { filter, take } from 'rxjs/operators';
 import { NgxOtpInputComponent, NgxOtpInputConfig } from 'ngx-otp-input';
 import { CityService } from 'src/app/manage/city/service/city.service';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { HotMuhuratsComponent } from '../hot-muhrats/muhrats.component';
 interface City {
     name: string;
     code: string;
@@ -190,13 +191,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         private cityService: CityService,
         private activatedRoute: ActivatedRoute,
         private renderer: Renderer2, private el: ElementRef
-    ) { 
+    ) {
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
               this.sidebarVisible = false; //hide sidebar
               const routeSegments = this.getRouteSegments(this.activatedRoute.snapshot);
               if (this.isVendorRoute(routeSegments)) {
-                // console.log('vendor');                
+                // console.log('vendor');
                 this.activeRoute = 'vendor'
               } else if (routeSegments.length === 0 || this.isVenueRoute(routeSegments)) {
                 // console.log('venue');
@@ -227,7 +228,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                     slidesToShow: 2.25,
                     slidesToScroll: 1,
                 },
-    
+
             },
             {
                 breakpoint: '768px',
@@ -251,7 +252,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                 id:"HOTDATES1",
                 image:"https://api.eazyvenue.com/uploads/muhurat/JanFeb_Muhrat_Dates_2024-02.jpg",
             },
-            
+
             {
                 id:"HOTDATES3",
                 image:"https://api.eazyvenue.com/uploads/muhurat/MarApr_Muhrat_Dates_2024-03.jpg",
@@ -272,12 +273,23 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                 id:"HOTDATES5",
                 image:"https://api.eazyvenue.com/uploads/muhurat/NovDec_Muhrat_Dates_2024-07.jpg",
             }
-            
+
         ]
     }
     toggleMuhurat(){
         this.muhuratDialog = true;
     }
+
+    isHotMuhuratsOpen: boolean = false;
+
+    toggleHotMuhurats() {
+      this.isHotMuhuratsOpen = !this.isHotMuhuratsOpen;
+    }
+
+    closeHotMuhurats() {
+      this.isHotMuhuratsOpen = false;
+    }
+
       getRouteSegments(route: any): string[] {
         const segments: string[] = [];
         while (route) {
@@ -288,11 +300,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         }
         return segments;
       }
-    
+
       isVendorRoute(segments: string[]): boolean {
         return segments.some(segment => segment.includes('vendor'));
       }
-    
+
       isVenueRoute(segments: string[]): boolean {
         return segments.some(segment => segment.includes('venue') || segment.includes('banquet'));
       }
@@ -423,7 +435,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
             }
         });
     }
-      
+
     // convenience getter for easy access to form fields
     get f() {
         return this.signUpForm.controls;
@@ -798,14 +810,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.authService.otpLogin(data).subscribe(
             (res:any) => {
                 // console.log(res);
-                
+
                 if (mode !== 'resendOtp') {
                     this.otpPopup = true;
                 }
                 this.oldUser = {
                     userType: res.firstName === '' ? 'new' : 'old',
                     firstName: res.firstName,
-                    lastName: res.lastName,                    
+                    lastName: res.lastName,
                 }
                 //this.mobileForm.reset();
                 this.submitted = false;
@@ -831,12 +843,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
             const txt2 = document.getElementById("txt2") as HTMLInputElement;
             const txt3 = document.getElementById("txt3") as HTMLInputElement;
             const txt4 = document.getElementById("txt4") as HTMLInputElement;
-    
+
             txt1.value = val.charAt(0) || ''
             txt2.value = val.charAt(1) || ''
             txt3.value = val.charAt(2) || ''
             txt4.value = val.charAt(3) || ''
-    
+
             txt4.focus();
         }
     }
@@ -844,14 +856,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.showOtpErrors = false;
           let length = c.value.length;
           let maxLength = 1;
-      
+
           if (length === maxLength) {
             this.otpArray[i] = c.value;
             if (n !== '') {
               n.focus();
             }
           }
-      
+
           if (e.key === 'Backspace') {
             this.otpArray[i] = '';
             if (p !== '') {
@@ -859,7 +871,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
             }
           }
       }
-      
+
     onOtpChange(otp) {
         if (otp[0]) {
             this.otp = otp[0];
@@ -906,7 +918,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
             return;
         }
         // console.log(this.otp);
-        
+
         let data = {};
         data['mobileNumber'] = this.mobileNumber;
         data['firstName'] = this.userFirstName;
@@ -965,8 +977,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         txt4.value = '';
 
         this.otp = '';
-        this.otpArray = [] 
-        
+        this.otpArray = []
+
     }
     otpTimer(counter, tick) {
         this.countDown = timer(0, this.tick)
@@ -1006,7 +1018,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         txt2.value = '';
         txt3.value = '';
         txt4.value = '';
-        this.otpArray = [] 
+        this.otpArray = []
     }
     showLoginRegisterDialog() {
         if (this.isLoggedIn == true) {

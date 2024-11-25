@@ -6,7 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PathLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
-import { CustomFormsModule } from 'ng2-validation'
+import { CustomFormsModule } from 'ng2-validation';
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { AvatarModule } from 'primeng/avatar';
@@ -212,7 +212,7 @@ import { EventplannerListComponent } from './manage/eventmanager/list/list.compo
 import { ResetPasswordComponent } from './frontend/reset-password/reset-password.component';
 import { WishlistComponent } from './manage/wishlist/wishlist.component';
 import { compareVenue } from './frontend/compare/compare.component';
-import { InfiniteScrollModule } from "ngx-infinite-scroll";
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { FilterPipe } from './filter.pipe';
 import { TermsComponent } from './frontend/terms/terms.component';
@@ -224,11 +224,11 @@ import { VendorDetailsComponent } from './frontend/vendor-details/vendor-details
 import { VendorCompareComponent } from './frontend/vendor-compare/vendor-compare.component';
 import { CancellationComponent } from './frontend/cancellation/cancellation.component';
 import { FaqComponent } from './frontend/faq/faq.component';
-
+import { HotMuhuratsComponent } from './frontend/hot-muhrats/muhrats.component';
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
     timeGridPlugin,
-    interactionPlugin
+    interactionPlugin,
 ]);
 
 @NgModule({
@@ -327,7 +327,7 @@ FullCalendarModule.registerPlugins([
         InfiniteScrollModule,
         NgOtpInputModule,
         NgxOtpInputModule,
-        NgxSliderModule
+        NgxSliderModule,
     ],
     declarations: [
         AboutUsComponent,
@@ -424,6 +424,7 @@ FullCalendarModule.registerPlugins([
         PrivacypolicyComponent,
         PolicyComponent,
         TermsComponent,
+        HotMuhuratsComponent,
         ServicesComponent,
         UserAddComponent,
         UserEditComponent,
@@ -444,12 +445,21 @@ FullCalendarModule.registerPlugins([
         VendorFilterListComponent,
         VendorDetailsComponent,
         VendorCompareComponent,
-        CancellationComponent
+        CancellationComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MenuService, AppMainComponent, AppComponent, LoaderService,
+        CountryService,
+        CustomerService,
+        EventService,
+        IconService,
+        NodeService,
+        PhotoService,
+        ProductService,
+        MenuService,
+        AppMainComponent,
+        AppComponent,
+        LoaderService,
         // REQUIRED IF YOU USE JWT AUTHENTICATION
         {
             provide: HTTP_INTERCEPTORS,
@@ -462,7 +472,6 @@ FullCalendarModule.registerPlugins([
             multi: true,
         },
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

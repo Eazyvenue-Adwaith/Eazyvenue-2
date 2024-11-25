@@ -54,36 +54,13 @@
                                         <li class="nav-item">
                                             <a class="nav-link border-end" [class.active]="activeRoute === 'vendor'" routerLink="/vendor">VENDORS</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link border-end hot-dates-link" style="cursor: pointer;" (click)="hotDatesOP.toggle($event)">HOT MUHURATS</a>
-                                            <p-overlayPanel #hotDatesOP [showCloseIcon]="true" [style]="{width: '450px'}">
-                                                <ng-template pTemplate>
-                                                    <div class="hot-dates-container">
-                                                        <div class="hot-dates-header">
-                                                            <img src="https://api.eazyvenue.com/uploads/muhurat/Header_Muhrat_Dates_2024-01.jpg" style="border-top-left-radius: 10px;border-top-right-radius: 10px;" alt="hot-dates-header">
-                                                        </div>
-                                                        <div class="hot-dates-body">
-                                                            <!-- <p-carousel [value]="hotDates" [numVisible]="1" [numScroll]="1" [circular]="true" [responsiveOptions]="hotDatesResponsiveOptions">
-                                                                <ng-template let-hotDate pTemplate="item">
-                                                                    <div class="hot-date-item">
-                                                                        <img [src]="hotDate.image" alt="Hot Date Image" srcset="">
-                                                                    </div>
-                                                                </ng-template>
-                                                            </p-carousel> -->
-                                                            <p-galleria [(value)]="hotDates" [responsiveOptions]="hotDatesResponsiveOptions"
-                                                            [containerStyle]="{'max-width': '100%;'}" [numVisible]="1" [circular]="true"
-                                                            [showThumbnails]="true" [showItemNavigators]="true"
-                                                            [showIndicators]="false" [showItemNavigatorsOnHover]="true" [showIndicatorsOnItem]="true">
-                                                                <ng-template let-hotDate pTemplate="item">
-                                                                    <img [src]="hotDate.image" alt="Hot Date Image" style="border-bottom-left-radius:10px;border-bottom-right-radius:10px;">
-                                                                </ng-template>
-                                                            </p-galleria>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </ng-template>
-                                            </p-overlayPanel>
-                                        </li>
+                                        <div class="hot-muhurats-container">
+                                            <li class="nav-item">
+                                              <a class="nav-link" (click)="toggleHotMuhurats()">HOT MUHURATS</a>
+                                            </li>
+                                            <app-muhrats [isOpen]="isHotMuhuratsOpen" (closeDrawer)="closeHotMuhurats()"></app-muhrats>
+                                          </div>
+
                                         <li class="nav-item">
                                             <!-- <a class="nav-link" href="#" (click)="showDialogoffer()">COUPLE DATE</a> -->
                                             <a class="nav-link"  style="color: gray;" pTooltip="Coming Soon" >COUPLE DATE</a>
@@ -91,7 +68,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            
+
                             <div class="col text-center topsearch" style="margin:auto;">
                                 <span class="p-input-icon-left align-items-center">
                                     <div class="global-search-icon">
@@ -141,7 +118,7 @@
                                             <div class="bs-example">
                                                 <ul id="nav" class="nav nav-pills userlogin clearfix right"
                                                     role="tablist" (mouseenter)="op.hide($event)">
-                                                   
+
 
                                                     <li class="dropdown">
                                                         <div (mouseenter)="op.toggle($event)">
@@ -149,7 +126,7 @@
                                                             <i class="pi pi-user p-button-rounded p-button-info dropbtn dropdown-toggle" style="color: #FF0000;  font-size: 1rem;"></i>
                                                         </a>
                                                         <!-- <-- <a href="#" class="list-items" data-toggle="dropdown">
-                                                            
+
                                                             <p-button icon="pi pi-user" data-bs-toggle="dropdown"
                                                                 aria-expanded="false"
                                                                 styleClass="p-button-rounded p-button-info dropbtn dropdown-toggle"></p-button>
@@ -690,15 +667,15 @@
                     <div class="custom-input-box">
                         <p>First Name: </p>
                         <div class="">
-                            <input type="text" pInputText [(ngModel)]="userFirstName" class="custom-input" name="userFirstName" (input)="validateFirstName()" #userFirstNameInput="ngModel" placeholder="First name" required minlength="3"> 
+                            <input type="text" pInputText [(ngModel)]="userFirstName" class="custom-input" name="userFirstName" (input)="validateFirstName()" #userFirstNameInput="ngModel" placeholder="First name" required minlength="3">
                             <div *ngIf="firstNameError" style="font-size: 8px; color: red;margin: 0; padding: 0;">First Name is required.</div>
                         </div>
-                        
+
                     </div>
                     <div class="custom-input-box">
                         <p>Last Name: </p>
                         <div class="">
-                        <input type="text" pInputText [(ngModel)]="userLastName" name="userLastName" class="custom-input"  (input)="validateLastName()"  #userLastNameInput="ngModel" placeholder="Last name" required minlength="3"> 
+                        <input type="text" pInputText [(ngModel)]="userLastName" name="userLastName" class="custom-input"  (input)="validateLastName()"  #userLastNameInput="ngModel" placeholder="Last name" required minlength="3">
                         <div *ngIf="lastNameError" style="font-size: 8px; color: red;margin: 0; padding: 0;">Last Name is required.</div>
                         <!-- <div *ngIf="userLastNameInput.invalid && (userLastNameInput.dirty || userLastNameInput.touched)">
                             <div *ngIf="userLastNameInput.errors.required" style="font-size: 8px; color: red;">Last Name is required.</div>
@@ -790,37 +767,4 @@
         <h5 class="mobile-num-design">Your registeration is complete.
         </h5>
     </div>
-</p-dialog>
-
-<p-dialog [(visible)]="muhuratDialog" [modal]="true" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"  [draggable]="false" [resizable]="false">
-    <!-- <li class="nav-item"> -->
-        <!-- <a class="nav-link border-end" style="cursor: pointer;" (click)="hotDatesOP.toggle($event)">HOT MUHURATS</a> -->
-        <!-- <p-overlayPanel #hotDatesOP [showCloseIcon]="true" [style]="{width: '450px'}"> -->
-            <ng-template pTemplate>
-                <div class="hot-dates-container">
-                    <div class="hot-dates-header">
-                        <img src="https://api.eazyvenue.com/uploads/muhurat/Header_Muhrat_Dates_2024-01.jpg" style="border-top-left-radius: 10px;border-top-right-radius: 10px;" alt="hot-dates-header">
-                    </div>
-                    <div class="hot-dates-body">
-                        <!-- <p-carousel [value]="hotDates" [numVisible]="1" [numScroll]="1" [circular]="true" [responsiveOptions]="hotDatesResponsiveOptions">
-                            <ng-template let-hotDate pTemplate="item">
-                                <div class="hot-date-item">
-                                    <img [src]="hotDate.image" alt="Hot Date Image" srcset="">
-                                </div>
-                            </ng-template>
-                        </p-carousel> -->
-                        <p-galleria [(value)]="hotDates" [responsiveOptions]="hotDatesResponsiveOptions"
-                        [containerStyle]="{'max-width': '100%;'}" [numVisible]="1" [circular]="true"
-                        [showThumbnails]="true" [showItemNavigators]="true"
-                        [showIndicators]="false" [showItemNavigatorsOnHover]="true" [showIndicatorsOnItem]="true">
-                            <ng-template let-hotDate pTemplate="item">
-                                <img [src]="hotDate.image" alt="Hot Date Image" style="border-bottom-left-radius:10px;border-bottom-right-radius:10px;">
-                            </ng-template>
-                        </p-galleria>
-                        
-                    </div>
-                </div>
-            </ng-template>
-        <!-- </p-overlayPanel>
-    </li> -->
 </p-dialog>
