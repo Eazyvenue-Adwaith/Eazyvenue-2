@@ -193,7 +193,7 @@ export class EditComponent implements OnInit {
             assured: [false],
             ownerfirstName: ['', [Validators.required, Validators.pattern('^[A-Za-z ]*$')]], //changed pattern
             ownerlastName: ['', [Validators.required, Validators.pattern('^[A-Za-z ]*$')]], //changed pattern
-            owneremailId: [''], //removed validation field is disabled 
+            owneremailId: [''], //removed validation field is disabled
             currentPassword: [''],
             password: [''],
             confirmPassword: [''],
@@ -646,6 +646,10 @@ export class EditComponent implements OnInit {
                 });
             }
             venueData['venueImage'] = this.venueImagesArray;
+            venueData.venuePrice = this.venueForm.get('venuePrice').value;
+            venueData.decor1Price = this.venueForm.get('decor1Price').value;
+            venueData.decor2Price = this.venueForm.get('decor2Price').value;
+            venueData.decor3Price = this.venueForm.get('decor3Price').value;
 
             this.decor1ImagesArray = [];
             if (this.decor1Image != undefined) {

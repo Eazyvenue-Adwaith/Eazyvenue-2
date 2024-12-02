@@ -25,8 +25,8 @@ module.exports = {
     },
   },
   db: {
-    url: 'mongodb://localhost:27017/eazyvenue-labs',
-    name: 'eazyvenue-labs',
+    url: 'mongodb+srv://eazyvenue-backup:eazyvenue-backup@cluster0.ecqnh.mongodb.net/',
+    name: 'easyvenue',
   },
   picture: {
     profilePicFolder: 'src/public/uploads/profilepic/',

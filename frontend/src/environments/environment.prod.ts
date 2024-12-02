@@ -1,20 +1,20 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://labs-api.eazyvenue.com/api/',
+    apiUrl: 'https://api.eazyvenue.com/api/',
     ageDiff: 18,
     defaultDate: "february 01 1950 00:00",
     minYear: "1950",
     yearRange: "2022:2060",
     yearDiff: 1,
     pagination: [10, 20, 50, 100, 1000, { showAll: 'All' }],
-    productUploadUrl: 'https://labs-api.eazyvenue.com/uploads/',
+    productUploadUrl: 'https://api.eazyvenue.com/uploads/',
     uploadUrl: 'src/public/uploads/cmsPic/',
     imageSize: 2000000,
     videoSize: 20000000,
     defaultDays: 5,
     frontEnd: {
-        domain: 'https://labs.eazyvenue.com',
-        picPath: 'https://labs-api.eazyvenue.com'
+        domain: 'https://eazyvenue.com',
+        picPath: 'https://api.eazyvenue.com'
     },
     picture: {
         profilePicFolder: 'src/public/uploads/profilepic/',

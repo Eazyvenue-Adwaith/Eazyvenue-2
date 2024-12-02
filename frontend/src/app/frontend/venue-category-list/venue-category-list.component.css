@@ -771,6 +771,18 @@ h4.ng-star-inserted {
     text-align: center;
 }
 
+.venue-title {
+    display: block;
+    text-align: right;
+    margin: 0 auto;
+  }
+
+.pageformat {
+    align-items: center;
+    text-align: center;
+    justify-items: center;
+}
+
 .acr-toggle-views {
     display: flex;
     margin-right: 34px;
@@ -797,6 +809,15 @@ margin: 0px;
     border-bottom: 1px solid var(--grey-color);
     margin-bottom: 15px;
     margin-top: 30px;
+}
+
+:host ::ng-deep .p-paginator {
+    position: relative;
+}
+
+:host ::ng-deep .p-dropdown-panel {
+    position: absolute;
+    z-index: 1000;
 }
 
 li.one-list {
@@ -2644,13 +2665,13 @@ h4.text-center {
     }
 }
 
-.compare-item{
+.compare-item {
     width: 250px;
     max-width: 250px;
     min-width: 250px;
 }
 
-.compare-row{
+.compare-row {
     display: flex;
     overflow-y: scroll;
 }

@@ -21,7 +21,6 @@ module.exports = {
   },
 
   db: {
-    url: 'mongodb+srv://recoverdiscover:91UzVwXONAJiqGgu@cluster0.qnxbb.mongodb.net/devrekoverdiscover',
-    name: 'devrekoverdiscover',
+    url: 'mongodb://0.0.0.0:27017/',
   },
 };

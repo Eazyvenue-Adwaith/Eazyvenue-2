@@ -882,9 +882,9 @@ router.get("/bymeta", async (req, res) => {
     try {
         const venue = await venueService.list(req.query,false);
         const data = venue.items[0];
-        data.decor1Price = 10000;
-        data.decor2Price = 45000;
-        data.decor3Price = "Call for prices";
+        data.decor1Price = data.decor1Price || 10000;
+        data.decor2Price = data.decor2Price || 45000;
+        data.decor3Price = data.decor3Price || "Call for prices";
         data.decor1Image = ['']
         data.decor2Image = ['']
         data.decor3Image = ['']

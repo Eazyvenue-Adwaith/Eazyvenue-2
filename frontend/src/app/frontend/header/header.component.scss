@@ -162,6 +162,10 @@ ul.user-dropdown li a {
     transition: 0.5s ease;
 }
 
+.hot-muhurats-container .nav-link {
+    cursor: pointer;
+  }
+
 .account-list ul li:hover {
     color: var(--main-color);
 }
@@ -171,7 +175,7 @@ ul.user-dropdown li a {
     font-size: 80% !important;
 }
 @media (max-width: 820px) {
-   
+
 .global-search-icon {
     z-index: 1 !important;
     background-color: #ffffff;
@@ -683,7 +687,7 @@ label.mobile-number-text {
     .sigma_header-controls.style-2.vendor-login {
         display: none;
     }
-   
+
     .list-account.m-0.mobile-view {
         position: absolute;
         right: 30px;
@@ -706,7 +710,7 @@ label.mobile-number-text {
     .col-2.header-login {
         margin: auto;
     }
-  
+
     @media (min-width:1281px) {
           i.user-login-icon.pi.pi-user-plus {
         display: none;
@@ -764,7 +768,7 @@ label.mobile-number-text {
         flex: 2;
     }
     div{
-        flex: 5; 
+        flex: 5;
     }
 }
 .custom-input{
@@ -773,7 +777,7 @@ label.mobile-number-text {
     padding: 5px 10px !important;
     margin: 5px !important;
     width: 100% !important;
-    
+
 }
 .custom-input:hover{
     border-color: #EC3539 !important;
@@ -803,7 +807,7 @@ label.mobile-number-text {
 ::ng-deep .p-galleria-indicators {
     background-color: transparent !important; /* Set the background color to transparent */
 }
- 
+
 ::ng-deep .pi-chevron-right {
     color: red !important; /* Set the desired color (red in this case) */
 }
@@ -812,7 +816,7 @@ label.mobile-number-text {
 }
 
 ::ng-deep .p-overlaypanel-close{
-    left: 10px !important; 
+    left: 10px !important;
 }
 
 @media (max-width: 820px) {
