@@ -1,6 +1,6 @@
 # Logs
 logs/ 
-src/public/uploads/
+# src/public/uploads/
 *.log
 npm-debug.log*
 yarn-debug.log*
