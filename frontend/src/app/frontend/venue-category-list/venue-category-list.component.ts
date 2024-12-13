@@ -1,12 +1,26 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Renderer2, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    ViewChild,
+    ElementRef,
+    HostListener,
+    Renderer2,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+} from '@angular/core';
 // import data from '../../../assets/demo/data/navigation.json';
 import { ProductService } from '../../demo/service/productservice';
 import { Product } from '../../demo/domain/product';
 // import listingblock from '../../../assets/demo/data/listing.json';
 import { BannerService } from 'src/app/services/banner.service';
+import { SubareaSpecificTitlesService } from '../../services/subarea-titles.service';
 import { VenueService } from 'src/app/manage/venue/service/venue.service';
 import { environment } from 'src/environments/environment';
-import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/api';
+import {
+    LazyLoadEvent,
+    MessageService,
+    ConfirmationService,
+} from 'primeng/api';
 import { TitleCasePipe } from '@angular/common';
 import { Paginator } from 'primeng/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -31,11 +45,13 @@ interface City {
     selector: 'app-venue-category-list',
     templateUrl: './venue-category-list.component.html',
     // changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrls: ['./venue-category-list.component.css', '../navigation/navigation.component.css'],
+    styleUrls: [
+        './venue-category-list.component.css',
+        '../navigation/navigation.component.css',
+    ],
     providers: [MessageService, ConfirmationService, TitleCasePipe],
 })
 export class VenueCategoryListComponent {
-
     homeSearch: boolean = false;
     selectedCountries: any[];
     filtration: any[] | undefined;
@@ -75,8 +91,8 @@ export class VenueCategoryListComponent {
     val3: number;
     val4: number;
     amenitiesArray: any[] = [];
-    venuePriceRangeValues: number[] = [0,100];
-    rangeValues: number[] = [0,100];
+    venuePriceRangeValues: number[] = [0, 100];
+    rangeValues: number[] = [0, 100];
     carouselResponsiveOptions: any[] = [
         {
             breakpoint: '1024px',
@@ -86,13 +102,13 @@ export class VenueCategoryListComponent {
         {
             breakpoint: '768px',
             numVisible: 3,
-            numScroll: 3
+            numScroll: 3,
         },
         {
             breakpoint: '560px',
             numVisible: 1,
-            numScroll: 1
-        }
+            numScroll: 1,
+        },
     ];
     public selectedCategoryId: any[];
     public urlMode;
@@ -128,7 +144,7 @@ export class VenueCategoryListComponent {
         {
             breakpoint: '560px',
             numVisible: 1,
-        }
+        },
     ];
     displayBasic: boolean = false;
     venueImages: [];
@@ -139,7 +155,7 @@ export class VenueCategoryListComponent {
     public date12: Date;
     public date13: Date;
     public es: any;
-    public invalidDates: Array<Date>
+    public invalidDates: Array<Date>;
     public parentCategoryDetails: any[] = [];
     public parentCategoryId;
     public categoryMenuList;
@@ -244,6 +260,7 @@ export class VenueCategoryListComponent {
     currentDescription;
 
     constructor(
+        private subareaSpecificTitlesService: SubareaSpecificTitlesService,
         private productService: ProductService,
         private BannerService: BannerService,
         private venueService: VenueService,
@@ -263,16 +280,15 @@ export class VenueCategoryListComponent {
         private changeDetectorRef: ChangeDetectorRef,
         private vendorService: VendorService,
         private meta: Meta,
-        private title: Title,
-    ) {
-    }
+        private title: Title
+    ) {}
     async ngOnInit() {
         const canonicalLink = this.renderer.createElement('link');
         this.renderer.setAttribute(canonicalLink, 'rel', 'canonical');
         this.renderer.setAttribute(canonicalLink, 'href', window.location.href);
         this.renderer.appendChild(document.head, canonicalLink);
 
-        this.urlMode = "venue_list";
+        this.urlMode = 'venue_list';
         this.minDateValue = new Date();
         this.renderer.addClass(document.body, 'body-dark');
         this.pageNumber = 1;
@@ -291,48 +307,104 @@ export class VenueCategoryListComponent {
         }
         this.filterGuestArray = [
             {
-                'id': 1, 'label': "50", condition: 'lte', value: 50, status: false
+                id: 1,
+                label: '50',
+                condition: 'lte',
+                value: 50,
+                status: false,
             },
             {
-                'id': 2, 'label': "100", condition: 'lte', value: 100, status: false
+                id: 2,
+                label: '100',
+                condition: 'lte',
+                value: 100,
+                status: false,
             },
             {
-                'id': 3, 'label': "200", condition: 'lte', value: 200, status: false
+                id: 3,
+                label: '200',
+                condition: 'lte',
+                value: 200,
+                status: false,
             },
             {
-                'id': 4, 'label': "500", condition: 'lte', value: 500, status: false
+                id: 4,
+                label: '500',
+                condition: 'lte',
+                value: 500,
+                status: false,
             },
             {
-                'id': 5, 'label': "1000", condition: 'lte', value: 1000, status: false
+                id: 5,
+                label: '1000',
+                condition: 'lte',
+                value: 1000,
+                status: false,
             },
             {
-                'id': 6, 'label': "1500", condition: 'lte', value: 1500, status: false
+                id: 6,
+                label: '1500',
+                condition: 'lte',
+                value: 1500,
+                status: false,
             },
             {
-                'id': 7, 'label': "2000", condition: 'lte', value: 2000, status: false
+                id: 7,
+                label: '2000',
+                condition: 'lte',
+                value: 2000,
+                status: false,
             },
         ];
         this.filterCapacityArray = [
             {
-                'id': 1, 'label': "Upto 50", condition: 'lte', value: 50, status: false
+                id: 1,
+                label: 'Upto 50',
+                condition: 'lte',
+                value: 50,
+                status: false,
             },
             {
-                'id': 2, 'label': "Upto 100", condition: 'lte', value: 100, status: false
+                id: 2,
+                label: 'Upto 100',
+                condition: 'lte',
+                value: 100,
+                status: false,
             },
             {
-                'id': 3, 'label': "Upto 200", condition: 'lte', value: 200, status: false
+                id: 3,
+                label: 'Upto 200',
+                condition: 'lte',
+                value: 200,
+                status: false,
             },
             {
-                'id': 4, 'label': "Upto 500", condition: 'lte', value: 500, status: false
+                id: 4,
+                label: 'Upto 500',
+                condition: 'lte',
+                value: 500,
+                status: false,
             },
             {
-                'id': 5, 'label': "Upto 1000", condition: 'lte', value: 1000, status: false
+                id: 5,
+                label: 'Upto 1000',
+                condition: 'lte',
+                value: 1000,
+                status: false,
             },
             {
-                'id': 6, 'label': "Upto 1500", condition: 'lte', value: 1500, status: false
+                id: 6,
+                label: 'Upto 1500',
+                condition: 'lte',
+                value: 1500,
+                status: false,
             },
             {
-                'id': 7, 'label': "Upto 2000", condition: 'lte', value: 2000, status: false
+                id: 7,
+                label: 'Upto 2000',
+                condition: 'lte',
+                value: 2000,
+                status: false,
             },
         ];
         // this.occasion = [
@@ -354,10 +426,10 @@ export class VenueCategoryListComponent {
             { name: 'Price (high to low)', value: 'price_high_low' },
             { name: 'Ratings', value: 'ratings' },
             { name: 'Popularity', value: 'popularity' },
-            { name: 'Distance', covaluede: 'distance' }
+            { name: 'Distance', covaluede: 'distance' },
         ];
 
-        this.activeRoute.queryParams.subscribe(params => {
+        this.activeRoute.queryParams.subscribe((params) => {
             this.startDate = params['startDate'];
             this.endDate = params['endDate'];
             this.guestCount = params['capacity'] ?? 100;
@@ -406,265 +478,404 @@ export class VenueCategoryListComponent {
             }
         });
 
-
         this.getSlots();
         this.getCategoryBySlug();
         await this.getSubareas();
         await this.getCities();
         this.getAllVenueList();
-        this.activeRoute.params.subscribe(params =>{
+        this.activeRoute.params.subscribe((params) => {
             const occasion_slug = params['occasion'];
             const city_slug = params['city'];
             const subarea_slug = params['subarea'];
 
-            if(!occasion_slug && !city_slug && !subarea_slug){
-                let mode = "category";
-                this.currentTitle = "Explore The Top Banquet Halls Near You - Eazyvenue.com";
-                this.currentDescription = "Explore exquisite banquet halls near you for weddings, parties, and corporate events. EazyVenue.com offers a curated selection of premier event spaces, blending sophistication and charm. Book now to create lasting memories in a stunning venue tailored to your needs.";
-                this.title.setTitle(this.currentTitle)
-                this.meta.addTag({name:"title",content:this.currentTitle})
-                this.meta.addTag({name:"description",content:this.currentDescription})
-                this.meta.addTag({name:"keywords",content:"banquet halls, Best banquet halls near me, wedding banquet halls,party halls, marriage halls near me"})
+            if (!occasion_slug && !city_slug && !subarea_slug) {
+                let mode = 'category';
+                this.currentTitle =
+                    'Explore The Top Banquet Halls Near You - Eazyvenue.com';
+                this.currentDescription =
+                    'Explore exquisite banquet halls near you for weddings, parties, and corporate events. EazyVenue.com offers a curated selection of premier event spaces, blending sophistication and charm. Book now to create lasting memories in a stunning venue tailored to your needs.';
+                this.title.setTitle(this.currentTitle);
+                this.meta.addTag({ name: 'title', content: this.currentTitle });
+                this.meta.addTag({
+                    name: 'description',
+                    content: this.currentDescription,
+                });
+                this.meta.addTag({
+                    name: 'keywords',
+                    content:
+                        'banquet halls, Best banquet halls near me, wedding banquet halls,party halls, marriage halls near me',
+                });
                 this.meta.addTag({ name: 'robots', content: 'index, follow' });
 
                 this.getVenueBudgetRange();
                 const itemListSchema = {
-                    "itemListElement":
-                        [
-                            {
-                                "item": "https://eazyvenue.com/",
-                                "@type": "ListItem",
-                                "name": "Home",
-                                "position": "1"
-                            },
-                            {
-                                "item": "https://eazyvenue.com/banquet-halls",
-                                "@type": "ListItem",
-                                "name": this.currentTitle,
-                                "position": "2"
-                            }
-                        ], "@type": "BreadcrumbList",
-                        "@context": "http://schema.org"
-                    }
+                    itemListElement: [
+                        {
+                            item: 'https://eazyvenue.com/',
+                            '@type': 'ListItem',
+                            name: 'Home',
+                            position: '1',
+                        },
+                        {
+                            item: 'https://eazyvenue.com/banquet-halls',
+                            '@type': 'ListItem',
+                            name: this.currentTitle,
+                            position: '2',
+                        },
+                    ],
+                    '@type': 'BreadcrumbList',
+                    '@context': 'http://schema.org',
+                };
 
-                const itemListScript =  document.createElement('script');
+                const itemListScript = document.createElement('script');
                 itemListScript.type = 'application/ld+json';
                 itemListScript.text = JSON.stringify(itemListSchema);
                 document.body.appendChild(itemListScript);
 
                 this.getVenueList(this.lazyLoadEvent, mode);
-            }else if(occasion_slug && !city_slug && !subarea_slug){
+            } else if (occasion_slug && !city_slug && !subarea_slug) {
                 this.guestCount = 100;
                 this.selectedFilter = [];
                 this.selectedSubareaData = [];
                 this.getVenueBudgetRange();
-                this.categoryService.getCategoryByName(this.capitalizeWords(occasion_slug)).subscribe(res =>{
-                    this.selectedOccasion = res.data;
-                    this.filterCategoryId = res.data.id
-                    this.currentTitle = "List of Best "+this.capitalizeWords(occasion_slug) +" Banquet halls - Eazyvenue.com";
-                    this.currentDescription = `Looking for the perfect ${this.capitalizeWords(occasion_slug)} Banquet halls for your event? Check out our list of the best ${this.capitalizeWords(occasion_slug)} Banquet halls in the area! From luxurious ballrooms to intimate halls, we've got you covered`;
-                    this.title.setTitle(this.currentTitle)
-                    this.meta.addTag({name:"title",content:this.currentTitle})
-                    this.meta.addTag({name:"description",content:this.currentDescription})
-                    this.meta.addTag({name:"keywords",content:`Top ${this.capitalizeWords(occasion_slug)} Banquet halls`})
-                    this.meta.addTag({ name: 'robots', content: 'index, follow' });
-                    const itemListSchema = {
-                        "itemListElement":
-                            [
-                                {
-                                    "item": "https://eazyvenue.com/",
-                                    "@type": "ListItem",
-                                    "name": "Home",
-                                    "position": "1"
-                                },
-                                {
-                                    "item": "https://eazyvenue.com/banquet-halls/",
-                                    "@type": "ListItem",
-                                    "name": "Explore The Top Banquet Halls Near You - Eazyvenue.com",
-                                    "position": "2"
-                                },
-                                {
-                                    "item": location.href,
-                                    "@type": "ListItem",
-                                    "name": this.currentTitle,
-                                    "position": "3"
-                                }
+                this.categoryService
+                    .getCategoryByName(this.capitalizeWords(occasion_slug))
+                    .subscribe(
+                        (res) => {
+                            this.selectedOccasion = res.data;
+                            this.filterCategoryId = res.data.id;
+                            const { title, description } =
+                                this.subareaSpecificTitlesService.getSubareaSpecificTitle(
+                                    null,
+                                    occasion_slug,
+                                    null
+                                );
+                            this.currentTitle = title;
+                            this.currentDescription = description;
+                            this.title.setTitle(this.currentTitle);
+                            this.meta.addTag({
+                                name: 'title',
+                                content: this.currentTitle,
+                            });
+                            this.meta.addTag({
+                                name: 'description',
+                                content: this.currentDescription,
+                            });
+                            this.meta.addTag({
+                                name: 'keywords',
+                                content: `Top ${this.capitalizeWords(
+                                    occasion_slug
+                                )} Banquet halls`,
+                            });
+                            this.meta.addTag({
+                                name: 'robots',
+                                content: 'index, follow',
+                            });
+                            const itemListSchema = {
+                                itemListElement: [
+                                    {
+                                        item: 'https://eazyvenue.com/',
+                                        '@type': 'ListItem',
+                                        name: 'Home',
+                                        position: '1',
+                                    },
+                                    {
+                                        item: 'https://eazyvenue.com/banquet-halls/',
+                                        '@type': 'ListItem',
+                                        name: 'Explore The Top Banquet Halls Near You - Eazyvenue.com',
+                                        position: '2',
+                                    },
+                                    {
+                                        item: location.href,
+                                        '@type': 'ListItem',
+                                        name: this.currentTitle,
+                                        position: '3',
+                                    },
+                                ],
+                                '@type': 'BreadcrumbList',
+                                '@context': 'http://schema.org',
+                            };
 
-                            ], "@type": "BreadcrumbList",
-                            "@context": "http://schema.org"
-                        }
-
-                    const itemListScript =  document.createElement('script');
-                    itemListScript.type = 'application/ld+json';
-                    itemListScript.text = JSON.stringify(itemListSchema);
-                    document.body.appendChild(itemListScript);
-                    this.getVenueList(this.lazyLoadEvent,'load')
-                },err =>{
-
-                })
-            }else if(occasion_slug && city_slug && !subarea_slug){
+                            const itemListScript =
+                                document.createElement('script');
+                            itemListScript.type = 'application/ld+json';
+                            itemListScript.text =
+                                JSON.stringify(itemListSchema);
+                            document.body.appendChild(itemListScript);
+                            this.getVenueList(this.lazyLoadEvent, 'load');
+                        },
+                        (err) => {}
+                    );
+            } else if (occasion_slug && city_slug && !subarea_slug) {
                 this.guestCount = 100;
                 this.selectedFilter = [];
                 this.selectedSubareaData = [];
                 this.getVenueBudgetRange();
-                this.categoryService.getCategoryByName(this.capitalizeWords(occasion_slug)).subscribe(res =>{
-                    this.selectedOccasion = res.data;
-                    this.filterCategoryId = res.data.id
-                    this.vendorService.getCityByName(this.capitalizeWords(city_slug)).subscribe(cdata =>{
-                        this.selectedCities.push(cdata.data);
-                        this.filterCityIds = [ this.selectedCities[0].id]
-                        this.currentTitle = "List of Best "+this.capitalizeWords(occasion_slug) +" Banquet halls in "+this.capitalizeWords(city_slug) + " - Eazyvenue.com";
-                        this.currentDescription = `Looking for the perfect ${this.capitalizeWords(occasion_slug)} Banquet halls in ${this.capitalizeWords(city_slug)} for your event? Check out our list of the best ${this.capitalizeWords(occasion_slug)} Banquet halls in ${this.capitalizeWords(city_slug)} in the area! From luxurious ballrooms to intimate halls, we've got you covered`;
-                        this.title.setTitle(this.currentTitle)
-                        this.meta.addTag({name:"title",content:this.currentTitle})
-                        this.meta.addTag({name:"description",content:this.currentDescription})
-                        this.meta.addTag({name:"keywords",content:`Top ${this.capitalizeWords(occasion_slug)} Banquet halls in ${this.capitalizeWords(city_slug)}`})
-                        this.meta.addTag({ name: 'robots', content: 'index, follow' });
-                        const currentUrl = location.href;
-                        let segments = currentUrl.split('/');
-                        segments.pop();
-                        let occasionUrl = segments.join('/');
-                        const itemListSchema = {
-                            "itemListElement":
-                                [
-                                    {
-                                        "item": "https://eazyvenue.com/",
-                                        "@type": "ListItem",
-                                        "name": "Home",
-                                        "position": "1"
+                this.categoryService
+                    .getCategoryByName(this.capitalizeWords(occasion_slug))
+                    .subscribe(
+                        (res) => {
+                            this.selectedOccasion = res.data;
+                            this.filterCategoryId = res.data.id;
+                            this.vendorService
+                                .getCityByName(this.capitalizeWords(city_slug))
+                                .subscribe(
+                                    (cdata) => {
+                                        this.selectedCities.push(cdata.data);
+                                        this.filterCityIds = [
+                                            this.selectedCities[0].id,
+                                        ];
+                                        const { title, description } =
+                                            this.subareaSpecificTitlesService.getSubareaSpecificTitle(
+                                                null,
+                                                occasion_slug,
+                                                city_slug
+                                            );
+                                        this.currentTitle = title;
+                                        this.currentDescription = description;
+                                        this.title.setTitle(this.currentTitle);
+                                        this.meta.addTag({
+                                            name: 'title',
+                                            content: this.currentTitle,
+                                        });
+                                        this.meta.addTag({
+                                            name: 'description',
+                                            content: this.currentDescription,
+                                        });
+                                        this.meta.addTag({
+                                            name: 'keywords',
+                                            content: `Top ${this.capitalizeWords(
+                                                occasion_slug
+                                            )} Banquet halls in ${this.capitalizeWords(
+                                                city_slug
+                                            )}`,
+                                        });
+                                        this.meta.addTag({
+                                            name: 'robots',
+                                            content: 'index, follow',
+                                        });
+                                        const currentUrl = location.href;
+                                        let segments = currentUrl.split('/');
+                                        segments.pop();
+                                        let occasionUrl = segments.join('/');
+                                        const itemListSchema = {
+                                            itemListElement: [
+                                                {
+                                                    item: 'https://eazyvenue.com/',
+                                                    '@type': 'ListItem',
+                                                    name: 'Home',
+                                                    position: '1',
+                                                },
+                                                {
+                                                    item: 'https://eazyvenue.com/banquet-halls/',
+                                                    '@type': 'ListItem',
+                                                    name: 'Explore The Top Banquet Halls Near You - Eazyvenue.com',
+                                                    position: '2',
+                                                },
+                                                {
+                                                    item: occasionUrl,
+                                                    '@type': 'ListItem',
+                                                    name:
+                                                        'List of Best ' +
+                                                        this.capitalizeWords(
+                                                            occasion_slug
+                                                        ) +
+                                                        ' Banquet halls - Eazyvenue.com',
+                                                    position: '3',
+                                                },
+                                                {
+                                                    item: currentUrl,
+                                                    '@type': 'ListItem',
+                                                    name: this.currentTitle,
+                                                    position: '4',
+                                                },
+                                            ],
+                                            '@type': 'BreadcrumbList',
+                                            '@context': 'http://schema.org',
+                                        };
+
+                                        const itemListScript =
+                                            document.createElement('script');
+                                        itemListScript.type =
+                                            'application/ld+json';
+                                        itemListScript.text =
+                                            JSON.stringify(itemListSchema);
+                                        document.body.appendChild(
+                                            itemListScript
+                                        );
+                                        this.getVenueList(
+                                            this.lazyLoadEvent,
+                                            'load'
+                                        );
                                     },
-                                    {
-                                        "item": "https://eazyvenue.com/banquet-halls/",
-                                        "@type": "ListItem",
-                                        "name": "Explore The Top Banquet Halls Near You - Eazyvenue.com",
-                                        "position": "2"
-                                    },
-                                    {
-                                        "item": occasionUrl,
-                                        "@type": "ListItem",
-                                        "name": "List of Best "+this.capitalizeWords(occasion_slug) +" Banquet halls - Eazyvenue.com",
-                                        "position": "3"
-                                    },
-                                    {
-                                        "item": currentUrl,
-                                        "@type": "ListItem",
-                                        "name": this.currentTitle,
-                                        "position": "4"
-                                    }
-
-                                ], "@type": "BreadcrumbList",
-                                "@context": "http://schema.org"
-                            }
-
-                        const itemListScript =  document.createElement('script');
-                        itemListScript.type = 'application/ld+json';
-                        itemListScript.text = JSON.stringify(itemListSchema);
-                        document.body.appendChild(itemListScript);
-                        this.getVenueList(this.lazyLoadEvent,'load')
-                    },cerr =>{
-
-                    })
-                },err =>{
-
-                })
-            }else if(occasion_slug && city_slug && subarea_slug){
+                                    (cerr) => {}
+                                );
+                        },
+                        (err) => {}
+                    );
+            } else if (occasion_slug && city_slug && subarea_slug) {
                 this.guestCount = 100;
                 this.selectedFilter = [];
                 this.selectedSubareaData = [];
                 this.getVenueBudgetRange();
-                this.categoryService.getCategoryByName(this.capitalizeWords(occasion_slug)).subscribe(res =>{
-                    this.selectedOccasion = res.data;
-                    this.filterCategoryId = res.data.id
-                    this.vendorService.getCityByName(this.capitalizeWords(city_slug)).subscribe(cdata =>{
-                        this.selectedCities.push(cdata.data);
-                        this.filterCityIds = [ this.selectedCities[0].id]
-                        this.currentTitle = "List of Best "+this.capitalizeWords(occasion_slug) +" Banquet halls in "+this.capitalizeWords(subarea_slug) + ", "+this.capitalizeWords(city_slug) + " - Eazyvenue.com";
-                        this.currentDescription = `Looking for the perfect ${this.capitalizeWords(occasion_slug)} Banquet halls in ${this.capitalizeWords(subarea_slug)}, ${this.capitalizeWords(city_slug)} for your event? Check out our list of the best ${this.capitalizeWords(occasion_slug)} Banquet halls in ${this.capitalizeWords(subarea_slug)}, ${this.capitalizeWords(city_slug)} in the area! From luxurious ballrooms to intimate halls, we've got you covered`;
-                        this.title.setTitle(this.currentTitle)
-                        this.meta.addTag({name:"title",content:this.currentTitle})
-                        this.meta.addTag({name:"description",content:this.currentDescription})
-                        this.meta.addTag({name:"keywords",content:`Top ${this.capitalizeWords(occasion_slug)} Banquet halls in ${this.capitalizeWords(subarea_slug)}, ${this.capitalizeWords(city_slug)}`})
-                        this.meta.addTag({ name: 'robots', content: 'index, follow' });
-                        const currentUrl = location.href;
-                        let segments = currentUrl.split('/');
-                        segments.pop();
-                        let cityUrl = segments.join('/');
-                        segments.pop();
-                        let occasionUrl = segments.join('/');
-                        const itemListSchema = {
-                            "itemListElement":
-                                [
-                                    {
-                                        "item": "https://eazyvenue.com/",
-                                        "@type": "ListItem",
-                                        "name": "Home",
-                                        "position": "1"
+                this.categoryService
+                    .getCategoryByName(this.capitalizeWords(occasion_slug))
+                    .subscribe(
+                        (res) => {
+                            this.selectedOccasion = res.data;
+                            this.filterCategoryId = res.data.id;
+                            this.vendorService
+                                .getCityByName(this.capitalizeWords(city_slug))
+                                .subscribe(
+                                    (cdata) => {
+                                        this.selectedCities.push(cdata.data);
+                                        this.filterCityIds = [
+                                            this.selectedCities[0].id,
+                                        ];
+                                        const { title, description } =
+                                            this.subareaSpecificTitlesService.getSubareaSpecificTitle(
+                                                subarea_slug,
+                                                occasion_slug,
+                                                city_slug
+                                            );
+                                        this.currentTitle = title;
+                                        this.currentDescription = description;
+                                        this.title.setTitle(this.currentTitle);
+                                        this.meta.addTag({
+                                            name: 'title',
+                                            content: this.currentTitle,
+                                        });
+                                        this.meta.addTag({
+                                            name: 'description',
+                                            content: this.currentDescription,
+                                        });
+                                        this.meta.addTag({
+                                            name: 'keywords',
+                                            content: `Top ${this.capitalizeWords(
+                                                occasion_slug
+                                            )} Banquet halls in ${this.capitalizeWords(
+                                                subarea_slug
+                                            )}, ${this.capitalizeWords(
+                                                city_slug
+                                            )}`,
+                                        });
+                                        this.meta.addTag({
+                                            name: 'robots',
+                                            content: 'index, follow',
+                                        });
+                                        const currentUrl = location.href;
+                                        let segments = currentUrl.split('/');
+                                        segments.pop();
+                                        let cityUrl = segments.join('/');
+                                        segments.pop();
+                                        let occasionUrl = segments.join('/');
+                                        const itemListSchema = {
+                                            itemListElement: [
+                                                {
+                                                    item: 'https://eazyvenue.com/',
+                                                    '@type': 'ListItem',
+                                                    name: 'Home',
+                                                    position: '1',
+                                                },
+                                                {
+                                                    item: 'https://eazyvenue.com/banquet-halls/',
+                                                    '@type': 'ListItem',
+                                                    name: 'Explore The Top Banquet Halls Near You - Eazyvenue.com',
+                                                    position: '2',
+                                                },
+                                                {
+                                                    item: occasionUrl,
+                                                    '@type': 'ListItem',
+                                                    name:
+                                                        'List of Best ' +
+                                                        this.capitalizeWords(
+                                                            occasion_slug
+                                                        ) +
+                                                        ' Banquet halls - Eazyvenue.com',
+                                                    position: '3',
+                                                },
+                                                {
+                                                    item: cityUrl,
+                                                    '@type': 'ListItem',
+                                                    name:
+                                                        'List of Best ' +
+                                                        this.capitalizeWords(
+                                                            occasion_slug
+                                                        ) +
+                                                        ' Banquet halls in ' +
+                                                        this.capitalizeWords(
+                                                            city_slug
+                                                        ) +
+                                                        ' - Eazyvenue.com',
+                                                    position: '4',
+                                                },
+                                                {
+                                                    item: currentUrl,
+                                                    '@type': 'ListItem',
+                                                    name: this.currentTitle,
+                                                    position: '5',
+                                                },
+                                            ],
+                                            '@type': 'BreadcrumbList',
+                                            '@context': 'http://schema.org',
+                                        };
+
+                                        const itemListScript =
+                                            document.createElement('script');
+                                        itemListScript.type =
+                                            'application/ld+json';
+                                        itemListScript.text =
+                                            JSON.stringify(itemListSchema);
+                                        document.body.appendChild(
+                                            itemListScript
+                                        );
+
+                                        this.vendorService
+                                            .getSubareaByName(
+                                                this.capitalizeWords(
+                                                    subarea_slug
+                                                )
+                                            )
+                                            .subscribe(
+                                                (sdata) => {
+                                                    this.selectedSubareaData.push(
+                                                        sdata.data
+                                                    );
+                                                    this.filterSubareaIds = [
+                                                        this
+                                                            .selectedSubareaData[0]
+                                                            .id,
+                                                    ];
+                                                    this.selectedSubareaIds = [
+                                                        this
+                                                            .selectedSubareaData[0]
+                                                            .id,
+                                                    ];
+                                                    this.getVenueList(
+                                                        this.lazyLoadEvent,
+                                                        'load'
+                                                    );
+                                                },
+                                                (serr) => {}
+                                            );
                                     },
-                                    {
-                                        "item": "https://eazyvenue.com/banquet-halls/",
-                                        "@type": "ListItem",
-                                        "name": "Explore The Top Banquet Halls Near You - Eazyvenue.com",
-                                        "position": "2"
-                                    },
-                                    {
-                                        "item": occasionUrl,
-                                        "@type": "ListItem",
-                                        "name": "List of Best "+this.capitalizeWords(occasion_slug) +" Banquet halls - Eazyvenue.com",
-                                        "position": "3"
-                                    },
-                                    {
-                                        "item": cityUrl,
-                                        "@type": "ListItem",
-                                        "name": "List of Best "+this.capitalizeWords(occasion_slug) +" Banquet halls in "+this.capitalizeWords(city_slug) + " - Eazyvenue.com",
-                                        "position": "4"
-                                    },
-                                    {
-                                        "item": currentUrl,
-                                        "@type": "ListItem",
-                                        "name": this.currentTitle,
-                                        "position": "5"
-                                    }
-
-                                ], "@type": "BreadcrumbList",
-                                "@context": "http://schema.org"
-                            }
-
-                        const itemListScript =  document.createElement('script');
-                        itemListScript.type = 'application/ld+json';
-                        itemListScript.text = JSON.stringify(itemListSchema);
-                        document.body.appendChild(itemListScript);
-
-                        this.vendorService.getSubareaByName(this.capitalizeWords(subarea_slug)).subscribe(
-                            sdata =>{
-                                this.selectedSubareaData.push(sdata.data);
-                                this.filterSubareaIds = [this.selectedSubareaData[0].id]
-                                this.selectedSubareaIds = [this.selectedSubareaData[0].id]
-                                this.getVenueList(this.lazyLoadEvent,'load')
-                            },
-                            serr =>{
-
-                            }
-                        )
-                    },cerr =>{
-
-                    })
-                },err =>{
-
-                })
-
-            }else{
-                this.router.navigateByUrl('/')
+                                    (cerr) => {}
+                                );
+                        },
+                        (err) => {}
+                    );
+            } else {
+                this.router.navigateByUrl('/');
             }
-
-        })
-        this.selectedSubareaIds = [...new Set(this.selectedSubareaIds)]
-
-
+        });
+        this.selectedSubareaIds = [...new Set(this.selectedSubareaIds)];
     }
     capitalizeWords(str) {
-        const formattedStr = str.replace(/\b\w/g, match => match.toUpperCase());
+        const formattedStr = str.replace(/\b\w/g, (match) =>
+            match.toUpperCase()
+        );
         return formattedStr.replace(/-/g, ' ');
-      }
+    }
     ngOnDestroy() {
         this.renderer.removeClass(document.body, 'body-dark');
     }
@@ -675,12 +886,13 @@ export class VenueCategoryListComponent {
             this.isNavbarFixed = false;
         }
     }
-    getAmenities(){
-        this.venueService.getAmenitiesList().subscribe(res =>{
-            this.amenitiesArray = res.data;
-        },err=>{
-
-        })
+    getAmenities() {
+        this.venueService.getAmenitiesList().subscribe(
+            (res) => {
+                this.amenitiesArray = res.data;
+            },
+            (err) => {}
+        );
     }
     showDialog() {
         this.visible = true;
@@ -688,120 +900,133 @@ export class VenueCategoryListComponent {
     clearDatesAndClose() {
         // this.rangeDates = null; // or reset to initial value
         this.datePicker.hideOverlay();
-      }
-      closeDatesMobileView(){
+    }
+    closeDatesMobileView() {
         this.datePickerMobile.hideOverlay();
-      }
+    }
     getCategoryBySlug() {
-        let query = "?filterByDisable=false&filterByStatus=true";
+        let query = '?filterByDisable=false&filterByStatus=true';
         this.categoryService.getCategoryWithoutAuthList(query).subscribe(
-            data => {
+            (data) => {
                 if (data.data.items.length > 0) {
                     this.parentCategoryDetails = data.data.items;
-                    this.parentCategoryDetails.forEach(element => {
-                        if (element.slug == "parent_category") {
+                    this.parentCategoryDetails.forEach((element) => {
+                        if (element.slug == 'parent_category') {
                             this.parentCategoryId = element['id'];
                             this.getCategoryList();
                         }
-                        if (element.slug == "property_type") {
+                        if (element.slug == 'property_type') {
                             this.propertyTypeId = element['id'];
                             this.getPropertyTypes();
                         }
-                        if (element.slug == "food") {
+                        if (element.slug == 'food') {
                             this.foodTypeId = element['id'];
                             this.getFoodTypes();
                         }
-                    })
+                    });
                 }
             },
-            err => {
+            (err) => {
                 this.errorMessage = err.error.message;
             }
         );
     }
     getCategoryList() {
-        let query = "?filterByDisable=false&filterByStatus=true&filterByParent=" + this.parentCategoryId + "&sortBy=created_at&orderBy=1";
+        let query =
+            '?filterByDisable=false&filterByStatus=true&filterByParent=' +
+            this.parentCategoryId +
+            '&sortBy=created_at&orderBy=1';
         this.categoryService.getCategoryWithoutAuthList(query).subscribe(
-            data => {
+            (data) => {
                 //if (data.data.items.length > 0) {
                 this.categoryMenuList = data.data.items;
                 let count = 0;
-                this.categoryMenuList.forEach(element => {
+                this.categoryMenuList.forEach((element) => {
                     element['selected'] = false;
                     if (this.filterCategoryId == element.id) {
                         //this.selectedOccasion.push(element);
                         this.selectedOccasion = element;
                         element['selected'] = true;
                         this.selectedCategories.push(element.id);
-                        this.selectedCategoriesNames.push({ 'id': element.id, 'name': element.name, selected: true });
+                        this.selectedCategoriesNames.push({
+                            id: element.id,
+                            name: element.name,
+                            selected: true,
+                        });
                     }
                     count++;
                 });
                 //}
             },
-            err => {
+            (err) => {
                 this.errorMessage = err.error.message;
             }
         );
     }
     getFoodTypes() {
-        let query = "?filterByDisable=false&filterByStatus=true&filterByParent=" + this.foodTypeId + "&sortBy=created_at&orderBy=1";
+        let query =
+            '?filterByDisable=false&filterByStatus=true&filterByParent=' +
+            this.foodTypeId +
+            '&sortBy=created_at&orderBy=1';
         this.categoryService.getCategoryWithoutAuthList(query).subscribe(
-            data => {
+            (data) => {
                 //if (data.data.items.length > 0) {
                 this.foodTypesList = data.data.items;
                 let count = 0;
-                this.foodTypesList.forEach(element => {
+                this.foodTypesList.forEach((element) => {
                     element['selected'] = false;
                     count++;
                 });
             },
-            err => {
+            (err) => {
                 this.errorMessage = err.error.message;
             }
         );
     }
     getPropertyTypes() {
-        let query = "?filterByDisable=false&filterByStatus=true&filterByParent=" + this.propertyTypeId + "&sortBy=created_at&orderBy=1";
+        let query =
+            '?filterByDisable=false&filterByStatus=true&filterByParent=' +
+            this.propertyTypeId +
+            '&sortBy=created_at&orderBy=1';
         this.categoryService.getCategoryWithoutAuthList(query).subscribe(
-            data => {
+            (data) => {
                 //if (data.data.items.length > 0) {
 
-                this.propertyTypesList = data.data.items.filter(item => item.name != 'Party Plots');
+                this.propertyTypesList = data.data.items.filter(
+                    (item) => item.name != 'Party Plots'
+                );
                 let count = 0;
-                this.propertyTypesList.forEach(element => {
+                this.propertyTypesList.forEach((element) => {
                     element['selected'] = false;
                     count++;
                 });
             },
-            err => {
+            (err) => {
                 this.errorMessage = err.error.message;
             }
         );
     }
     getSlots() {
-        let query = "?filterByDisable=false&filterByStatus=true";
+        let query = '?filterByDisable=false&filterByStatus=true';
         this.slotService.getSlotListWithoutAuth(query).subscribe(
-            data => {
+            (data) => {
                 if (data.data.items.length > 0) {
                     this.slotList = data.data.items;
                 }
             },
-            error => {
-
-            }
+            (error) => {}
         );
     }
     async getSubareas() {
-        let query = "?filterByDisable=false&filterByStatus=true";
+        let query = '?filterByDisable=false&filterByStatus=true';
         this.subareaService.getSubareaList(query).subscribe(
-            data => {
+            (data) => {
                 this.subareaList = data.data.items;
                 this.selectedSubareaData = [];
-                this.subareaList.forEach(element => {
+                this.subareaList.forEach((element) => {
                     if (this.filterSubareaIds != undefined) {
                         if (this.filterSubareaIds.length > 0) {
-                            this.filterSubareaIds.forEach(sElement => {
+                            this.filterSubareaIds.forEach((sElement) => {
                                 if (sElement === element.id) {
                                     this.selectedSubareaData.push(element);
                                     if (this.selectedFilter === undefined) {
@@ -815,23 +1040,23 @@ export class VenueCategoryListComponent {
                     }
                 });
             },
-            err => {
+            (err) => {
                 this.errorMessage = err.error.message;
             }
         );
     }
     async getCities() {
-        let query = "list=true";
+        let query = 'list=true';
         // let query = "?filterByDisable=false&filterByStatus=true";
         this.cityService.getcityList(query).subscribe(
-            data => {
+            (data) => {
                 this.cityList = data.data.items;
                 if (this.cityList.length > 0) {
                     this.selectedFilter = [];
-                    this.cityList.forEach(element => {
+                    this.cityList.forEach((element) => {
                         if (this.filterCityIds !== undefined) {
                             if (this.filterCityIds.length > 0) {
-                                this.filterCityIds.forEach(cElement => {
+                                this.filterCityIds.forEach((cElement) => {
                                     element.mode = 'city';
                                     if (cElement === element.id) {
                                         if (this.selectedFilter == undefined) {
@@ -843,7 +1068,7 @@ export class VenueCategoryListComponent {
                                 });
                             }
                         }
-                    })
+                    });
                     // this.selectedSubareaData.forEach(sElement => {
                     //     sElement.mode = 'subarea';
                     //     this.selectedFilter.push(sElement);
@@ -856,7 +1081,7 @@ export class VenueCategoryListComponent {
                     // }
                 }
             },
-            err => {
+            (err) => {
                 this.errorMessage = err.error.message;
             }
         );
@@ -879,38 +1104,39 @@ export class VenueCategoryListComponent {
         for (let i = 0; i < this.cityList.length; i++) {
             let city = this.cityList[i];
             if (city.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                city.mode = "city";
+                city.mode = 'city';
                 filtered.push(city);
             }
         }
         for (let i = 0; i < this.subareaList.length; i++) {
             let subarea = this.subareaList[i];
             if (subarea.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                subarea.mode = "subarea";
+                subarea.mode = 'subarea';
                 filtered.push(subarea);
             }
         }
         for (let i = 0; i < this.allVenueList.length; i++) {
             let venue = this.allVenueList[i];
             if (venue.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                venue.mode = "venue";
+                venue.mode = 'venue';
                 filtered.push(venue);
             }
         }
         this.filteredList = filtered;
     }
     getAllVenueList() {
-        let query = "filterByDisable=false&filterByStatus=true&filterByAssured=true";
+        let query =
+            'filterByDisable=false&filterByStatus=true&filterByAssured=true';
         // &filterByCategory=" + this.selectedCategoryId;
         this.venueService.getVenueListAllVenues().subscribe(
-            data => {
+            (data) => {
                 // console.log(data);
 
                 //if (data.data.items.length > 0) {
                 this.allVenueList = data.data.items;
                 //}
             },
-            err => {
+            (err) => {
                 this.errorMessage = err.error.message;
             }
         );
@@ -928,20 +1154,34 @@ export class VenueCategoryListComponent {
     onClickFilter(filter) {
         if (this.selectedSort != null) {
             if (this.selectedSort.value === 'price_low_high') {
-                this.finalVenueList.sort((a, b) => Number(a['minVenuePrice']) - Number(b['minVenuePrice']));
+                this.finalVenueList.sort(
+                    (a, b) =>
+                        Number(a['minVenuePrice']) - Number(b['minVenuePrice'])
+                );
             }
 
             if (this.selectedSort.value === 'price_high_low') {
-                let test = this.finalVenueList.sort((a, b) => Number(b['minVenuePrice']) - Number(a['minVenuePrice']));
+                let test = this.finalVenueList.sort(
+                    (a, b) =>
+                        Number(b['minVenuePrice']) - Number(a['minVenuePrice'])
+                );
             }
             if (this.selectedSort.value === 'ratings') {
-                this.finalVenueList.sort((a, b) => Number(b['eazyVenueRating']) - Number(a['eazyVenueRating']));
+                this.finalVenueList.sort(
+                    (a, b) =>
+                        Number(b['eazyVenueRating']) -
+                        Number(a['eazyVenueRating'])
+                );
             }
             if (this.selectedSort.value === 'popularity') {
-                this.finalVenueList.sort((a, b) => Number(b['views']) - Number(a['views']));
+                this.finalVenueList.sort(
+                    (a, b) => Number(b['views']) - Number(a['views'])
+                );
             }
         } else {
-            this.finalVenueList.sort((a, b) => Number(a['capacity']) - Number(b['capacity']));
+            this.finalVenueList.sort(
+                (a, b) => Number(a['capacity']) - Number(b['capacity'])
+            );
         }
         // this.changeDetectorRef.detectChanges();
 
@@ -975,23 +1215,23 @@ export class VenueCategoryListComponent {
         this.startDate = this.rangeDates[0];
         this.endDate = this.rangeDates[1];
         if (this.endDate === null) {
-            this.endDate = moment(this.startDate).format("YYYY-MM-DD");
+            this.endDate = moment(this.startDate).format('YYYY-MM-DD');
         } else {
             this.datePicker.overlayVisible = false;
-            this.endDate = moment(this.rangeDates[1]).format("YYYY-MM-DD");
+            this.endDate = moment(this.rangeDates[1]).format('YYYY-MM-DD');
         }
-        this.startDate = moment(this.rangeDates[0]).format("YYYY-MM-DD");
+        this.startDate = moment(this.rangeDates[0]).format('YYYY-MM-DD');
         // this.finalVenueList = [];
         // this.pageNumber = 1;
         // this.getVenueList(this.lazyLoadEvent, this.mode);
     }
     onClickSearch() {
         let selectedCities;
-        if(this.selectedCities.length > 0){
-            if(this.selectedCities[0].id === undefined){
+        if (this.selectedCities.length > 0) {
+            if (this.selectedCities[0].id === undefined) {
                 selectedCities = JSON.stringify(this.selectedCities);
-            }else{
-                selectedCities = [this.selectedCities[0].id]
+            } else {
+                selectedCities = [this.selectedCities[0].id];
             }
         }
         //  = JSON.stringify(this.selectedCities);
@@ -999,27 +1239,33 @@ export class VenueCategoryListComponent {
         let selectedVenueIds = JSON.stringify(this.selectedVenueIds);
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(
-            ['/banquet-halls'],
-            {
-                queryParams: {
-                    startDate: this.startDate,
-                    endDate: this.endDate,
-                    capacity: this.capacity,
-                    occasion: this.selectedCategories,
-                    city: selectedCities,
-                    area: selectedSubareaIds,
-                    venue: selectedVenueIds
-                }
-            }
-        );
+        this.router.navigate(['/banquet-halls'], {
+            queryParams: {
+                startDate: this.startDate,
+                endDate: this.endDate,
+                capacity: this.capacity,
+                occasion: this.selectedCategories,
+                city: selectedCities,
+                area: selectedSubareaIds,
+                venue: selectedVenueIds,
+            },
+        });
     }
 
     onClearResetAllData(event) {
         if (event.mode === 'venue') {
-            let index = this.findVenueIndexById(event.id, this.selectedVenueIds);
-            let venueIndex = this.findIndexById(event.id, this.selectedVenueList);
-            let filterVenueIndex = this.findVenueIndexById(event.id, this.filterVenueIds);
+            let index = this.findVenueIndexById(
+                event.id,
+                this.selectedVenueIds
+            );
+            let venueIndex = this.findIndexById(
+                event.id,
+                this.selectedVenueList
+            );
+            let filterVenueIndex = this.findVenueIndexById(
+                event.id,
+                this.filterVenueIds
+            );
             if (index !== -1) {
                 if (this.selectedVenueIds.length > 0) {
                     this.selectedVenueIds.splice(index, 1);
@@ -1032,9 +1278,18 @@ export class VenueCategoryListComponent {
                 this.filterVenueIds.splice(filterVenueIndex, 1);
             }
         } else if (event.mode === 'subarea') {
-            let index = this.findVenueIndexById(event.id, this.selectedSubareaIds);
-            let filterSubareaIdsIndex = this.findVenueIndexById(event.id, this.filterSubareaIds);
-            let selectedSubareaIndex = this.findIndexById(event.id, this.selectedSubareaData);
+            let index = this.findVenueIndexById(
+                event.id,
+                this.selectedSubareaIds
+            );
+            let filterSubareaIdsIndex = this.findVenueIndexById(
+                event.id,
+                this.filterSubareaIds
+            );
+            let selectedSubareaIndex = this.findIndexById(
+                event.id,
+                this.selectedSubareaData
+            );
             if (index !== -1) {
                 this.selectedSubareaIds.splice(index, 1);
             }
@@ -1046,7 +1301,10 @@ export class VenueCategoryListComponent {
             }
         } else if (event.mode === 'city') {
             let index = this.findVenueIndexById(event.id, this.selectedCities);
-            let filterCityIndex = this.findVenueIndexById(event.id, this.filterCityIds);
+            let filterCityIndex = this.findVenueIndexById(
+                event.id,
+                this.filterCityIds
+            );
             if (index !== -1) {
                 this.selectedCities.splice(index, 1);
             }
@@ -1056,7 +1314,7 @@ export class VenueCategoryListComponent {
         }
         this.finalVenueList = [];
         this.pageNumber = 1;
-        this.mode = "category";
+        this.mode = 'category';
         this.getVenueList(this.lazyLoadEvent, this.mode);
     }
     findVenueIndexById(id, arrayName) {
@@ -1075,7 +1333,10 @@ export class VenueCategoryListComponent {
             if (category.selected == true) {
                 this.selectedCategories = [];
                 this.selectedCategoriesNames = [];
-                let index = this.findIndexById(category.id, this.categoryMenuList);
+                let index = this.findIndexById(
+                    category.id,
+                    this.categoryMenuList
+                );
                 if (index != -1) {
                     this.categoryMenuList[index].selected = false;
                     // let selectedIndex = this.findSelectedIndexById(category.id, this.selectedCategories);
@@ -1088,12 +1349,21 @@ export class VenueCategoryListComponent {
                     // }
                 }
             } else {
-                let index = this.findIndexById(category.id, this.categoryMenuList);
+                let index = this.findIndexById(
+                    category.id,
+                    this.categoryMenuList
+                );
                 if (index != -1) {
                     this.categoryMenuList[index].selected = true;
                     //let selectedIndex = this.findSelectedIndexById(category.id, this.selectedCategories);
                     this.selectedCategories = category.id;
-                    this.selectedCategoriesNames = [{ 'id': category.id, 'name': category.name, selected: true }];
+                    this.selectedCategoriesNames = [
+                        {
+                            id: category.id,
+                            name: category.name,
+                            selected: true,
+                        },
+                    ];
                 }
             }
         } else {
@@ -1132,8 +1402,14 @@ export class VenueCategoryListComponent {
         //     }
         // }
         let index = this.findIndexById(foodType.id, this.foodTypesList);
-        let selectedIndex = this.findSelectedIndexById(foodType.id, this.selectedFoodTypes);
-        let selectedNameIndex = this.findIndexById(foodType.id, this.selectedFoodTypeNames);
+        let selectedIndex = this.findSelectedIndexById(
+            foodType.id,
+            this.selectedFoodTypes
+        );
+        let selectedNameIndex = this.findIndexById(
+            foodType.id,
+            this.selectedFoodTypeNames
+        );
 
         // Deselect all other items
         this.foodTypesList.forEach((type, i) => {
@@ -1159,35 +1435,53 @@ export class VenueCategoryListComponent {
                 this.foodTypesList[index].selected = true;
             }
             this.selectedFoodTypes = [foodType.id];
-            this.selectedFoodTypeNames = [{ 'id': foodType.id, 'name': foodType.name, selected: true }];
+            this.selectedFoodTypeNames = [
+                { id: foodType.id, name: foodType.name, selected: true },
+            ];
         }
         this.pageNumber = 1;
         this.finalVenueList = [];
-        this.mode = "food";
+        this.mode = 'food';
         this.getVenueList(this.lazyLoadEvent, this.mode);
     }
     onClickPropertyType(propertyType) {
         if (propertyType.selected == true) {
-            let index = this.findIndexById(propertyType.id, this.propertyTypesList);
+            let index = this.findIndexById(
+                propertyType.id,
+                this.propertyTypesList
+            );
             if (index != -1) {
                 this.propertyTypesList[index].selected = false;
-                let selectedIndex = this.findSelectedIndexById(propertyType.id, this.selectedPropertyTypes);
-                let selectedNameIndex = this.findIndexById(propertyType.id, this.selectedPropertyTypeNames);
+                let selectedIndex = this.findSelectedIndexById(
+                    propertyType.id,
+                    this.selectedPropertyTypes
+                );
+                let selectedNameIndex = this.findIndexById(
+                    propertyType.id,
+                    this.selectedPropertyTypeNames
+                );
                 this.selectedPropertyTypes.splice(selectedIndex, 1);
                 this.selectedPropertyTypeNames.splice(selectedNameIndex, 1);
             }
         } else {
-            let index = this.findIndexById(propertyType.id, this.propertyTypesList);
+            let index = this.findIndexById(
+                propertyType.id,
+                this.propertyTypesList
+            );
             if (index != -1) {
                 this.propertyTypesList[index].selected = true;
                 //let selectedIndex = this.findSelectedIndexById(propertyType.id, this.selectedPropertyTypes);
                 this.selectedPropertyTypes.push(propertyType.id);
-                this.selectedPropertyTypeNames.push({ 'id': propertyType.id, 'name': propertyType.name, selected: true });
+                this.selectedPropertyTypeNames.push({
+                    id: propertyType.id,
+                    name: propertyType.name,
+                    selected: true,
+                });
             }
         }
         this.finalVenueList = [];
         this.pageNumber = 1;
-        this.mode = "propertyType";
+        this.mode = 'propertyType';
         this.getVenueList(this.lazyLoadEvent, this.mode);
     }
     findSelectedIndexById(id, arrayName) {
@@ -1206,44 +1500,86 @@ export class VenueCategoryListComponent {
                 this.seatingCapacityId = capacity.id;
                 this.seatingCapacity = capacity.value;
                 this.seatingCapacityCondition = capacity.condition;
-                this.filterCapacityArray.forEach(element => {
-                    let reportObj = { id: element.id, label: element.label, condition: element.condition, value: element.value, status: element.status };
+                this.filterCapacityArray.forEach((element) => {
+                    let reportObj = {
+                        id: element.id,
+                        label: element.label,
+                        condition: element.condition,
+                        value: element.value,
+                        status: element.status,
+                    };
                     element.status = false;
                     if (this.seatingCapacityId == element.id) {
-                        const index = this.findIndexById(element.id, this.filterCapacityArray);
-                        reportObj = { id: element.id, label: element.label, condition: element.condition, value: element.value, status: true };
+                        const index = this.findIndexById(
+                            element.id,
+                            this.filterCapacityArray
+                        );
+                        reportObj = {
+                            id: element.id,
+                            label: element.label,
+                            condition: element.condition,
+                            value: element.value,
+                            status: true,
+                        };
                         this.filterCapacityArray[index] = reportObj;
-                        this.selectedSeatingCapacityNames = [{ 'id': element.id, 'name': element.label, selected: true }];
+                        this.selectedSeatingCapacityNames = [
+                            {
+                                id: element.id,
+                                name: element.label,
+                                selected: true,
+                            },
+                        ];
                     }
-                })
+                });
             } else {
                 this.seatingCapacity = capacity;
                 this.seatingCapacityCondition = '';
                 if (capacity > 1000) {
-                    this.capacityCondition = "lte";
+                    this.capacityCondition = 'lte';
                 } else {
-                    this.capacityCondition = "lte";
+                    this.capacityCondition = 'lte';
                 }
             }
         } else {
-            this.filterCapacityArray.forEach(element => {
-                let reportObj = { id: element.id, label: element.label, condition: element.condition, value: element.value, status: element.status };
+            this.filterCapacityArray.forEach((element) => {
+                let reportObj = {
+                    id: element.id,
+                    label: element.label,
+                    condition: element.condition,
+                    value: element.value,
+                    status: element.status,
+                };
                 element.status = false;
                 if (this.seatingCapacityId == element.id) {
-                    const index = this.findIndexById(element.id, this.filterCapacityArray);
-                    reportObj = { id: element.id, label: element.label, condition: element.condition, value: element.value, status: false };
+                    const index = this.findIndexById(
+                        element.id,
+                        this.filterCapacityArray
+                    );
+                    reportObj = {
+                        id: element.id,
+                        label: element.label,
+                        condition: element.condition,
+                        value: element.value,
+                        status: false,
+                    };
                     this.filterCapacityArray[index] = reportObj;
-                    let selectedNameIndex = this.findIndexById(element.id, this.selectedSeatingCapacityNames);
+                    let selectedNameIndex = this.findIndexById(
+                        element.id,
+                        this.selectedSeatingCapacityNames
+                    );
 
-                    this.selectedSeatingCapacityNames.splice(selectedNameIndex, 1);
+                    this.selectedSeatingCapacityNames.splice(
+                        selectedNameIndex,
+                        1
+                    );
                 }
-            })
+            });
             this.seatingCapacity = capacity;
             this.seatingCapacityCondition = '';
         }
         this.finalVenueList = [];
         this.pageNumber = 1;
-        this.mode = "seating_capacity";
+        this.mode = 'seating_capacity';
         this.getVenueList(this.lazyLoadEvent, this.mode);
     }
     onClickGuestCount(capacity, event) {
@@ -1256,23 +1592,44 @@ export class VenueCategoryListComponent {
                 //     return;
                 // }
                 this.capacityCondition = capacity.condition;
-                this.filterGuestArray.forEach(element => {
-                    let reportObj = { id: element.id, label: element.label, condition: element.condition, value: element.value, status: element.status };
+                this.filterGuestArray.forEach((element) => {
+                    let reportObj = {
+                        id: element.id,
+                        label: element.label,
+                        condition: element.condition,
+                        value: element.value,
+                        status: element.status,
+                    };
                     element.status = false;
                     if (this.capacityId == element.id) {
-                        const index = this.findIndexById(element.id, this.filterGuestArray);
-                        reportObj = { id: element.id, label: element.label, condition: element.condition, value: element.value, status: true };
+                        const index = this.findIndexById(
+                            element.id,
+                            this.filterGuestArray
+                        );
+                        reportObj = {
+                            id: element.id,
+                            label: element.label,
+                            condition: element.condition,
+                            value: element.value,
+                            status: true,
+                        };
                         this.filterGuestArray[index] = reportObj;
-                        this.selectedFloatingCapacityNames = [{ 'id': element.id, 'name': element.label, selected: true }];
+                        this.selectedFloatingCapacityNames = [
+                            {
+                                id: element.id,
+                                name: element.label,
+                                selected: true,
+                            },
+                        ];
                     }
-                })
+                });
             } else {
                 this.capacity = capacity.value;
                 this.capacityCondition = '';
                 if (capacity > 500) {
-                    this.capacityCondition = "lte";
+                    this.capacityCondition = 'lte';
                 } else {
-                    this.capacityCondition = "lte";
+                    this.capacityCondition = 'lte';
                 }
             }
         } else {
@@ -1287,27 +1644,47 @@ export class VenueCategoryListComponent {
             //     console.log(typeof this.capacity);
             //     return;
             // }
-            this.filterGuestArray.forEach(element => {
-                let reportObj = { id: element.id, label: element.label, condition: element.condition, value: element.value, status: element.status };
+            this.filterGuestArray.forEach((element) => {
+                let reportObj = {
+                    id: element.id,
+                    label: element.label,
+                    condition: element.condition,
+                    value: element.value,
+                    status: element.status,
+                };
                 element.status = false;
                 if (this.seatingCapacityId == element.id) {
-                    const index = this.findIndexById(element.id, this.filterGuestArray);
-                    reportObj = { id: element.id, label: element.label, condition: element.condition, value: element.value, status: false };
+                    const index = this.findIndexById(
+                        element.id,
+                        this.filterGuestArray
+                    );
+                    reportObj = {
+                        id: element.id,
+                        label: element.label,
+                        condition: element.condition,
+                        value: element.value,
+                        status: false,
+                    };
                     this.filterGuestArray[index] = reportObj;
-                    let selectedNameIndex = this.findIndexById(element.id, this.selectedFloatingCapacityNames);
-                    this.selectedFloatingCapacityNames.splice(selectedNameIndex, 1);
+                    let selectedNameIndex = this.findIndexById(
+                        element.id,
+                        this.selectedFloatingCapacityNames
+                    );
+                    this.selectedFloatingCapacityNames.splice(
+                        selectedNameIndex,
+                        1
+                    );
                 }
             });
             if (capacity > 500) {
-                this.capacityCondition = "lte";
+                this.capacityCondition = 'lte';
             } else {
-                this.capacityCondition = "lte";
+                this.capacityCondition = 'lte';
             }
-
         }
         this.finalVenueList = [];
         this.pageNumber = 1;
-        this.mode = "guest";
+        this.mode = 'guest';
         this.getVenueList(this.lazyLoadEvent, this.mode);
     }
     onClickTopGuestCount(guestCount, event) {
@@ -1324,19 +1701,30 @@ export class VenueCategoryListComponent {
     }
     onClickSendEnquiries(venue, mode) {
         if (this.selectedOccasion == undefined) {
-            this.messageService.add({ key: 'toastMsg', severity: 'error', summary: 'error', detail: 'Please select occasion.', life: 6000 });
+            this.messageService.add({
+                key: 'toastMsg',
+                severity: 'error',
+                summary: 'error',
+                detail: 'Please select occasion.',
+                life: 6000,
+            });
             return;
         }
         this.confirmationService.confirm({
-            message: 'Are you sure you want to send enquiry for ' + (this.titlecasePipe.transform(venue.name)) + ' venue?',
+            message:
+                'Are you sure you want to send enquiry for ' +
+                this.titlecasePipe.transform(venue.name) +
+                ' venue?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                let durationData = [{
-                    occasionStartDate: this.rangeDates[0],
-                    occasionEndDate: this.rangeDates[1],
-                    slotId: this.slotList[0].id
-                }];
+                let durationData = [
+                    {
+                        occasionStartDate: this.rangeDates[0],
+                        occasionEndDate: this.rangeDates[1],
+                        slotId: this.slotList[0].id,
+                    },
+                ];
                 this.orderType = mode;
                 let venueOrderData = {
                     categoryId: this.selectedOccasion.id,
@@ -1351,96 +1739,111 @@ export class VenueCategoryListComponent {
                     price: venue.minVenuePrice,
                     foodMenuType: [venue.minFoodType],
                     orderType: this.orderType,
-                    bookingPrice: venue.minVenuePrice
+                    bookingPrice: venue.minVenuePrice,
                 };
 
                 this.venueOrderService.addVenueOrder(venueOrderData).subscribe(
-                    data => {
-
+                    (data) => {
                         if (mode == 'send_enquires') {
-                            this.messageService.add({ key: 'toastMsg', severity: 'success', summary: 'Successful', detail: 'Enquires send to eazyvenue.', life: 6000 });
+                            this.messageService.add({
+                                key: 'toastMsg',
+                                severity: 'success',
+                                summary: 'Successful',
+                                detail: 'Enquires send to eazyvenue.',
+                                life: 6000,
+                            });
                         } else {
-                            this.messageService.add({ key: 'toastMsg', severity: 'success', summary: 'Successful', detail: 'Venue order booked.', life: 6000 });
+                            this.messageService.add({
+                                key: 'toastMsg',
+                                severity: 'success',
+                                summary: 'Successful',
+                                detail: 'Venue order booked.',
+                                life: 6000,
+                            });
                         }
 
                         setTimeout(() => {
                             //let currentUrl = '/venue/' + this.id;
                             let currentUrl = '/my-profile?mode=' + mode;
-                            this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+                            this.router.routeReuseStrategy.shouldReuseRoute =
+                                () => false;
                             this.router.onSameUrlNavigation = 'reload';
                             this.router.navigate([currentUrl]);
                         }, 2000);
                     },
-                    ((err) => {
-                        this.messageService.add({ key: 'toastMsg', severity: 'error', summary: err.error.message, detail: 'Venue order booked failed', life: 6000 });
-                    })
+                    (err) => {
+                        this.messageService.add({
+                            key: 'toastMsg',
+                            severity: 'error',
+                            summary: err.error.message,
+                            detail: 'Venue order booked failed',
+                            life: 6000,
+                        });
+                    }
                 );
             },
-            reject: () => {
-
-            }
+            reject: () => {},
         });
-
     }
 
     onSelectAmenities(amenity, event) {
         // console.log(amenity);
         const amenityName = amenity.name;
         const indexOfAmenity = this.selectedAmenitiesNew.indexOf(amenityName);
-        if(indexOfAmenity === -1){
+        if (indexOfAmenity === -1) {
             this.selectedAmenitiesNew.push(amenityName);
-        }else{
-            this.selectedAmenitiesNew.splice(indexOfAmenity,1)
+        } else {
+            this.selectedAmenitiesNew.splice(indexOfAmenity, 1);
         }
 
         if (event.checked.length > 0) {
-            if (amenity.slug == "swimming_pool") {
+            if (amenity.slug == 'swimming_pool') {
                 this.swimmingPoolFilter = true;
             }
-            if (amenity.slug == "parking") {
+            if (amenity.slug == 'parking') {
                 this.parkingFilter = true;
             }
-            if (amenity.slug == "ac") {
+            if (amenity.slug == 'ac') {
                 this.acFilter = true;
             }
-            if (amenity.slug == "green_rooms") {
+            if (amenity.slug == 'green_rooms') {
                 this.greenRoomsFilter = true;
             }
-            if (amenity.slug == "power_backup") {
+            if (amenity.slug == 'power_backup') {
                 this.powerBackupFilter = true;
             }
-            if (amenity.slug == "dj") {
+            if (amenity.slug == 'dj') {
                 this.djFilter = true;
             }
-            if (amenity.slug == "entertainment_license") {
+            if (amenity.slug == 'entertainment_license') {
                 this.entertainmentLicenseFilter = true;
             }
         } else {
-            if (amenity.slug == "swimming_pool") {
+            if (amenity.slug == 'swimming_pool') {
                 this.swimmingPoolFilter = false;
             }
-            if (amenity.slug == "parking") {
+            if (amenity.slug == 'parking') {
                 this.parkingFilter = false;
             }
-            if (amenity.slug == "ac") {
+            if (amenity.slug == 'ac') {
                 this.acFilter = false;
             }
-            if (amenity.slug == "green_rooms") {
+            if (amenity.slug == 'green_rooms') {
                 this.greenRoomsFilter = false;
             }
-            if (amenity.slug == "power_backup") {
+            if (amenity.slug == 'power_backup') {
                 this.powerBackupFilter = false;
             }
-            if (amenity.slug == "dj") {
+            if (amenity.slug == 'dj') {
                 this.djFilter = false;
             }
-            if (amenity.slug == "entertainment_license") {
+            if (amenity.slug == 'entertainment_license') {
                 this.entertainmentLicenseFilter = false;
             }
         }
         this.finalVenueList = [];
         this.pageNumber = 1;
-        this.mode = "guest";
+        this.mode = 'guest';
         this.getVenueList(this.lazyLoadEvent, this.mode);
     }
     findIndexById(id, arrayName) {
@@ -1456,9 +1859,12 @@ export class VenueCategoryListComponent {
     onVenuePriceChange() {
         this.minVenuePrice = this.minVenuePriceInput.nativeElement.value;
         this.maxVenuePrice = this.maxVenuePriceInput.nativeElement.value;
-        this.mode = "venuePrice";
-        if(this.minVenuePrice < this.venuePriceRangeValues[1]){
-            this.rangeValues = [this.minVenuePriceInput.nativeElement.value,this.maxVenuePriceInput.nativeElement.value]
+        this.mode = 'venuePrice';
+        if (this.minVenuePrice < this.venuePriceRangeValues[1]) {
+            this.rangeValues = [
+                this.minVenuePriceInput.nativeElement.value,
+                this.maxVenuePriceInput.nativeElement.value,
+            ];
         }
         this.getVenueList(this.lazyLoadEvent, this.mode);
     }
@@ -1509,74 +1915,82 @@ export class VenueCategoryListComponent {
         // });
         // this.pageNumber = 1;
         // this.getVenueList(this.lazyLoadEvent, this.mode);
-        this.router.navigateByUrl("/banquet-halls")
+        this.router.navigateByUrl('/banquet-halls');
     }
-    getVenueBudgetRange(){
-        let query = "?guestCount="+this.guestCount;
-        if(this.selectedCategories.length > 0){
-            query += "&categoryId="+this.selectedCategories[0]
+    getVenueBudgetRange() {
+        let query = '?guestCount=' + this.guestCount;
+        if (this.selectedCategories.length > 0) {
+            query += '&categoryId=' + this.selectedCategories[0];
         }
         if (this.selectedSubareaIds.length > 0) {
-            this.selectedSubareaIds.forEach(element => {
-                query += "&subareaid="+element;
+            this.selectedSubareaIds.forEach((element) => {
+                query += '&subareaid=' + element;
             });
         }
         if (this.selectedCities.length > 0) {
-            this.selectedCities.forEach(element => {
-                if(typeof element === 'string'){
-                    query += "&citycode="+element;
-                }else{
-                    query += "&citycode="+element.id;
+            this.selectedCities.forEach((element) => {
+                if (typeof element === 'string') {
+                    query += '&citycode=' + element;
+                } else {
+                    query += '&citycode=' + element.id;
                 }
             });
         }
         // console.log(query);
 
-        this.venueService.getMinMaxVenuePrice(query).subscribe(res =>{
-            // console.log(res);
+        this.venueService.getMinMaxVenuePrice(query).subscribe(
+            (res) => {
+                // console.log(res);
 
-            this.venuePriceRangeValues = [res.data[0].minCalculatedValue, res.data[0].maxCalculatedValue];
-            this.rangeValues = [res.data[0].minCalculatedValue, res.data[0].maxCalculatedValue];
-        },err =>{
-            console.log(err);
-
-        })
+                this.venuePriceRangeValues = [
+                    res.data[0].minCalculatedValue,
+                    res.data[0].maxCalculatedValue,
+                ];
+                this.rangeValues = [
+                    res.data[0].minCalculatedValue,
+                    res.data[0].maxCalculatedValue,
+                ];
+            },
+            (err) => {
+                console.log(err);
+            }
+        );
     }
 
     getPreviousVenues() {
         if (this.currentPage > 1) {
-          this.currentPage--;
-          this.loadVenues('previous');
+            this.currentPage--;
+            this.loadVenues('previous');
         }
-      }
+    }
 
-      getNextVenues() {
-        if ((this.currentPage * this.pageSize) < this.totalRecords) {
-          this.currentPage++;
-          this.loadVenues('next');
+    getNextVenues() {
+        if (this.currentPage * this.pageSize < this.totalRecords) {
+            this.currentPage++;
+            this.loadVenues('next');
         }
-      }
+    }
 
-      loadVenues(mode: string) {
+    loadVenues(mode: string) {
         const event: LazyLoadEvent = {
-          first: (this.currentPage - 1) * this.pageSize,
-          rows: this.pageSize
+            first: (this.currentPage - 1) * this.pageSize,
+            rows: this.pageSize,
         };
         this.getVenueList(event, mode);
-      }
+    }
     getVenueList(event: LazyLoadEvent, mode) {
         // console.log(this.selectedAmenitiesNew);
         console.log(event);
 
-        let params = "";
+        let params = '';
         let rows = 10;
-        let query = "filterByDisable=false&filterByStatus=true";
-        let newQuery = "?assured=true&disabled=false";
+        let query = 'filterByDisable=false&filterByStatus=true';
+        let newQuery = '?assured=true&disabled=false';
         if (event !== undefined) {
             if (event.first != undefined && event.first == 0) {
                 this.pageNumber = event.first + 1;
             } else if (event.first != undefined && event.first > 0) {
-                this.pageNumber = (event.first / event.rows) + 1;
+                this.pageNumber = event.first / event.rows + 1;
             } else {
                 this.pageNumber = 1;
             }
@@ -1590,183 +2004,329 @@ export class VenueCategoryListComponent {
             // this.pageNumber = 1;
             rows = 10;
             if (this.selectedCategories.length > 0) {
-                query += "&filterByCategory=" + this.selectedCategories;
-                newQuery += "&categoryId="+this.selectedCategories[0]
+                query += '&filterByCategory=' + this.selectedCategories;
+                newQuery += '&categoryId=' + this.selectedCategories[0];
             }
             if (this.selectedPropertyTypes.length > 0) {
                 // console.log(this.selectedPropertyTypes);
-                this.selectedPropertyTypes.forEach(element => {
-                    newQuery += "&propertyType="+element;
+                this.selectedPropertyTypes.forEach((element) => {
+                    newQuery += '&propertyType=' + element;
                 });
-                query += "&filterByPropertyType=" + this.selectedPropertyTypes;
+                query += '&filterByPropertyType=' + this.selectedPropertyTypes;
             }
             if (this.minVenuePrice > 0 && this.maxVenuePrice > 0) {
-                newQuery += "&minVenuePrice="+this.minVenuePrice+"&=maxVenuePrice"+this.maxVenuePrice;
-                query += "&filterByMinVenuePrice=" + this.minVenuePrice + "&filterByMaxVenuePrice=" + this.maxVenuePrice;
+                newQuery +=
+                    '&minVenuePrice=' +
+                    this.minVenuePrice +
+                    '&=maxVenuePrice' +
+                    this.maxVenuePrice;
+                query +=
+                    '&filterByMinVenuePrice=' +
+                    this.minVenuePrice +
+                    '&filterByMaxVenuePrice=' +
+                    this.maxVenuePrice;
             }
 
-            if (this.capacityCondition != undefined && this.capacity != undefined && this.capacityCondition != '' && this.capacity != '') {
-                newQuery += "&guestCount="+this.capacityCondition;
-                query += "&filterByGuestCondition=" + this.capacityCondition + "&filterByGuestCapacity=" + this.capacity;
+            if (
+                this.capacityCondition != undefined &&
+                this.capacity != undefined &&
+                this.capacityCondition != '' &&
+                this.capacity != ''
+            ) {
+                newQuery += '&guestCount=' + this.capacityCondition;
+                query +=
+                    '&filterByGuestCondition=' +
+                    this.capacityCondition +
+                    '&filterByGuestCapacity=' +
+                    this.capacity;
             }
             if (this.selectedFoodTypes.length > 0) {
-                this.selectedFoodTypes.forEach(ele =>{
-                    newQuery += "&foodType="+ele;
-                })
-                query += "&filterByFoodType=" + this.selectedFoodTypes;
+                this.selectedFoodTypes.forEach((ele) => {
+                    newQuery += '&foodType=' + ele;
+                });
+                query += '&filterByFoodType=' + this.selectedFoodTypes;
             }
-            if (this.seatingCapacityCondition != undefined && this.seatingCapacity != undefined && this.seatingCapacityCondition != '' && this.seatingCapacity != '') {
-                query += "&filterByGuestCondition=" + this.seatingCapacityCondition + "&filterByGuestCapacity=" + this.seatingCapacity;
-                newQuery += "&seatingCapacity="+ this.seatingCapacity;
+            if (
+                this.seatingCapacityCondition != undefined &&
+                this.seatingCapacity != undefined &&
+                this.seatingCapacityCondition != '' &&
+                this.seatingCapacity != ''
+            ) {
+                query +=
+                    '&filterByGuestCondition=' +
+                    this.seatingCapacityCondition +
+                    '&filterByGuestCapacity=' +
+                    this.seatingCapacity;
+                newQuery += '&seatingCapacity=' + this.seatingCapacity;
             }
         }
         if (mode == 'propertyType') {
             this.pageNumber = 1;
             rows = 10;
-            this.selectedPropertyTypes.forEach(element => {
-                newQuery += "&propertyType="+element;
+            this.selectedPropertyTypes.forEach((element) => {
+                newQuery += '&propertyType=' + element;
             });
-            query += "&filterByPropertyType=" + this.selectedPropertyTypes;
+            query += '&filterByPropertyType=' + this.selectedPropertyTypes;
             if (this.selectedCategories.length > 0) {
-                newQuery += "&categoryId="+this.selectedCategories[0]
-                query += "&filterByCategory=" + this.selectedCategories;
+                newQuery += '&categoryId=' + this.selectedCategories[0];
+                query += '&filterByCategory=' + this.selectedCategories;
             }
             if (this.minVenuePrice > 0 && this.maxVenuePrice > 0) {
-                newQuery += "&minVenuePrice="+this.minVenuePrice+"&=maxVenuePrice"+this.maxVenuePrice;
-                query += "&filterByMinVenuePrice=" + this.minVenuePrice + "&filterByMaxVenuePrice=" + this.maxVenuePrice;
+                newQuery +=
+                    '&minVenuePrice=' +
+                    this.minVenuePrice +
+                    '&=maxVenuePrice' +
+                    this.maxVenuePrice;
+                query +=
+                    '&filterByMinVenuePrice=' +
+                    this.minVenuePrice +
+                    '&filterByMaxVenuePrice=' +
+                    this.maxVenuePrice;
             }
-            if (this.capacityCondition != undefined && this.capacity != undefined && this.capacityCondition != '' && this.capacity != '') {
-                newQuery += "&guestCount="+this.capacityCondition;
-                query += "&filterByGuestCondition=" + this.capacityCondition + "&filterByGuestCapacity=" + this.capacity;
+            if (
+                this.capacityCondition != undefined &&
+                this.capacity != undefined &&
+                this.capacityCondition != '' &&
+                this.capacity != ''
+            ) {
+                newQuery += '&guestCount=' + this.capacityCondition;
+                query +=
+                    '&filterByGuestCondition=' +
+                    this.capacityCondition +
+                    '&filterByGuestCapacity=' +
+                    this.capacity;
             }
             if (this.selectedFoodTypes.length > 0) {
-                this.selectedFoodTypes.forEach(ele =>{
-                    newQuery += "&foodType="+ele;
-                })
-                query += "&filterByFoodType=" + this.selectedFoodTypes;
+                this.selectedFoodTypes.forEach((ele) => {
+                    newQuery += '&foodType=' + ele;
+                });
+                query += '&filterByFoodType=' + this.selectedFoodTypes;
             }
-            if (this.seatingCapacityCondition != undefined && this.seatingCapacity != undefined && this.seatingCapacityCondition != '' && this.seatingCapacity != '') {
-                newQuery += "&seatingCapacity="+ this.seatingCapacity;
-                query += "&filterByGuestCondition=" + this.seatingCapacityCondition + "&filterByGuestCapacity=" + this.seatingCapacity;
+            if (
+                this.seatingCapacityCondition != undefined &&
+                this.seatingCapacity != undefined &&
+                this.seatingCapacityCondition != '' &&
+                this.seatingCapacity != ''
+            ) {
+                newQuery += '&seatingCapacity=' + this.seatingCapacity;
+                query +=
+                    '&filterByGuestCondition=' +
+                    this.seatingCapacityCondition +
+                    '&filterByGuestCapacity=' +
+                    this.seatingCapacity;
             }
         }
         if (mode == 'food') {
             this.pageNumber = 1;
             rows = 10;
-            this.selectedFoodTypes.forEach(ele =>{
-                newQuery += "&foodType="+ele;
-            })
-            query += "&filterByFoodType=" + this.selectedFoodTypes;
+            this.selectedFoodTypes.forEach((ele) => {
+                newQuery += '&foodType=' + ele;
+            });
+            query += '&filterByFoodType=' + this.selectedFoodTypes;
             if (this.selectedCategories.length > 0) {
-                newQuery += "&categoryId="+this.selectedCategories[0]
-                query += "&filterByCategory=" + this.selectedCategories;
+                newQuery += '&categoryId=' + this.selectedCategories[0];
+                query += '&filterByCategory=' + this.selectedCategories;
             }
             if (this.minVenuePrice > 0 && this.maxVenuePrice > 0) {
-                newQuery += "&minVenuePrice="+this.minVenuePrice+"&=maxVenuePrice"+this.maxVenuePrice;
-                query += "&filterByMinVenuePrice=" + this.minVenuePrice + "&filterByMaxVenuePrice=" + this.maxVenuePrice;
+                newQuery +=
+                    '&minVenuePrice=' +
+                    this.minVenuePrice +
+                    '&=maxVenuePrice' +
+                    this.maxVenuePrice;
+                query +=
+                    '&filterByMinVenuePrice=' +
+                    this.minVenuePrice +
+                    '&filterByMaxVenuePrice=' +
+                    this.maxVenuePrice;
             }
-            if (this.capacityCondition != undefined && this.capacity != undefined && this.capacityCondition != '' && this.capacity != '') {
-                newQuery += "&guestCount="+this.capacityCondition;
-                query += "&filterByGuestCondition=" + this.capacityCondition + "&filterByGuestCapacity=" + this.capacity;
+            if (
+                this.capacityCondition != undefined &&
+                this.capacity != undefined &&
+                this.capacityCondition != '' &&
+                this.capacity != ''
+            ) {
+                newQuery += '&guestCount=' + this.capacityCondition;
+                query +=
+                    '&filterByGuestCondition=' +
+                    this.capacityCondition +
+                    '&filterByGuestCapacity=' +
+                    this.capacity;
             }
             if (this.selectedPropertyTypes.length > 0) {
-                this.selectedPropertyTypes.forEach(element => {
-                    newQuery += "&propertyType="+element;
+                this.selectedPropertyTypes.forEach((element) => {
+                    newQuery += '&propertyType=' + element;
                 });
-                query += "&filterByPropertyType=" + this.selectedPropertyTypes;
+                query += '&filterByPropertyType=' + this.selectedPropertyTypes;
             }
-            if (this.seatingCapacityCondition != undefined && this.seatingCapacity != undefined && this.seatingCapacityCondition != '' && this.seatingCapacity != '') {
-                query += "&filterByGuestCondition=" + this.seatingCapacityCondition + "&filterByGuestCapacity=" + this.seatingCapacity;
-                newQuery += "&seatingCapacity="+ this.seatingCapacity;
+            if (
+                this.seatingCapacityCondition != undefined &&
+                this.seatingCapacity != undefined &&
+                this.seatingCapacityCondition != '' &&
+                this.seatingCapacity != ''
+            ) {
+                query +=
+                    '&filterByGuestCondition=' +
+                    this.seatingCapacityCondition +
+                    '&filterByGuestCapacity=' +
+                    this.seatingCapacity;
+                newQuery += '&seatingCapacity=' + this.seatingCapacity;
             }
         }
         if (mode == 'venuePrice') {
             this.pageNumber = 1;
             rows = 10;
-            newQuery += "&minVenuePrice="+this.minVenuePrice+"&maxVenuePrice="+this.maxVenuePrice;
-            query += "&filterByMinVenuePrice=" + this.minVenuePrice + "&filterByMaxVenuePrice=" + this.maxVenuePrice;
+            newQuery +=
+                '&minVenuePrice=' +
+                this.minVenuePrice +
+                '&maxVenuePrice=' +
+                this.maxVenuePrice;
+            query +=
+                '&filterByMinVenuePrice=' +
+                this.minVenuePrice +
+                '&filterByMaxVenuePrice=' +
+                this.maxVenuePrice;
             if (this.selectedCategories.length > 0) {
-                newQuery += "&categoryId="+this.selectedCategories[0]
-                query += "&filterByCategory=" + this.selectedCategories;
+                newQuery += '&categoryId=' + this.selectedCategories[0];
+                query += '&filterByCategory=' + this.selectedCategories;
             }
             if (this.selectedPropertyTypes.length > 0) {
-                this.selectedPropertyTypes.forEach(element => {
-                    newQuery += "&propertyType="+element;
+                this.selectedPropertyTypes.forEach((element) => {
+                    newQuery += '&propertyType=' + element;
                 });
-                query += "&filterByPropertyType=" + this.selectedPropertyTypes;
+                query += '&filterByPropertyType=' + this.selectedPropertyTypes;
             }
-            if (this.capacityCondition != undefined && this.capacity != undefined && this.capacityCondition != '' && this.capacity != '') {
-                newQuery += "&guestCount="+this.capacityCondition;
-                query += "&filterByGuestCondition=" + this.capacityCondition + "&filterByGuestCapacity=" + this.capacity;
+            if (
+                this.capacityCondition != undefined &&
+                this.capacity != undefined &&
+                this.capacityCondition != '' &&
+                this.capacity != ''
+            ) {
+                newQuery += '&guestCount=' + this.capacityCondition;
+                query +=
+                    '&filterByGuestCondition=' +
+                    this.capacityCondition +
+                    '&filterByGuestCapacity=' +
+                    this.capacity;
             }
             if (this.selectedFoodTypes.length > 0) {
-                this.selectedFoodTypes.forEach(ele =>{
-                    newQuery += "&foodType="+ele;
-                })
-                query += "&filterByFoodType=" + this.selectedFoodTypes;
+                this.selectedFoodTypes.forEach((ele) => {
+                    newQuery += '&foodType=' + ele;
+                });
+                query += '&filterByFoodType=' + this.selectedFoodTypes;
             }
-            if (this.seatingCapacityCondition != undefined && this.seatingCapacity != undefined && this.seatingCapacityCondition != '' && this.seatingCapacity != '') {
-                query += "&filterByGuestCondition=" + this.seatingCapacityCondition + "&filterByGuestCapacity=" + this.seatingCapacity;
-                newQuery += "&seatingCapacity="+ this.seatingCapacity;
+            if (
+                this.seatingCapacityCondition != undefined &&
+                this.seatingCapacity != undefined &&
+                this.seatingCapacityCondition != '' &&
+                this.seatingCapacity != ''
+            ) {
+                query +=
+                    '&filterByGuestCondition=' +
+                    this.seatingCapacityCondition +
+                    '&filterByGuestCapacity=' +
+                    this.seatingCapacity;
+                newQuery += '&seatingCapacity=' + this.seatingCapacity;
             }
         }
         if (mode == 'guest') {
             this.pageNumber = 1;
             rows = 10;
-            query += "&filterByGuestCondition=" + this.capacityCondition + "&filterByGuestCapacity=" + this.capacity;
-            newQuery += "&guestCount="+this.capacityCondition;
+            query +=
+                '&filterByGuestCondition=' +
+                this.capacityCondition +
+                '&filterByGuestCapacity=' +
+                this.capacity;
+            newQuery += '&guestCount=' + this.capacityCondition;
             if (this.selectedCategories.length > 0) {
-                newQuery += "&categoryId="+this.selectedCategories[0]
-                query += "&filterByCategory=" + this.selectedCategories;
+                newQuery += '&categoryId=' + this.selectedCategories[0];
+                query += '&filterByCategory=' + this.selectedCategories;
             }
             if (this.selectedPropertyTypes.length > 0) {
-                this.selectedPropertyTypes.forEach(element => {
-                    newQuery += "&propertyType="+element;
+                this.selectedPropertyTypes.forEach((element) => {
+                    newQuery += '&propertyType=' + element;
                 });
-                query += "&filterByPropertyType=" + this.selectedPropertyTypes;
+                query += '&filterByPropertyType=' + this.selectedPropertyTypes;
             }
             if (this.minVenuePrice > 0 && this.maxVenuePrice > 0) {
-                newQuery += "&minVenuePrice="+this.minVenuePrice+"&=maxVenuePrice"+this.maxVenuePrice;
-                query += "&filterByMinVenuePrice=" + this.minVenuePrice + "&filterByMaxVenuePrice=" + this.maxVenuePrice;
+                newQuery +=
+                    '&minVenuePrice=' +
+                    this.minVenuePrice +
+                    '&=maxVenuePrice' +
+                    this.maxVenuePrice;
+                query +=
+                    '&filterByMinVenuePrice=' +
+                    this.minVenuePrice +
+                    '&filterByMaxVenuePrice=' +
+                    this.maxVenuePrice;
             }
             if (this.selectedFoodTypes.length > 0) {
-                this.selectedFoodTypes.forEach(ele =>{
-                    newQuery += "&foodType="+ele;
-                })
-                query += "&filterByFoodType=" + this.selectedFoodTypes;
+                this.selectedFoodTypes.forEach((ele) => {
+                    newQuery += '&foodType=' + ele;
+                });
+                query += '&filterByFoodType=' + this.selectedFoodTypes;
             }
-            if (this.seatingCapacityCondition != undefined && this.seatingCapacity != undefined && this.seatingCapacityCondition != '' && this.seatingCapacity != '') {
-                query += "&filterByGuestCondition=" + this.seatingCapacityCondition + "&filterByGuestCapacity=" + this.seatingCapacity;
-                newQuery += "&seatingCapacity="+ this.seatingCapacity;
+            if (
+                this.seatingCapacityCondition != undefined &&
+                this.seatingCapacity != undefined &&
+                this.seatingCapacityCondition != '' &&
+                this.seatingCapacity != ''
+            ) {
+                query +=
+                    '&filterByGuestCondition=' +
+                    this.seatingCapacityCondition +
+                    '&filterByGuestCapacity=' +
+                    this.seatingCapacity;
+                newQuery += '&seatingCapacity=' + this.seatingCapacity;
             }
         }
         if (mode == 'seating_capacity') {
             this.pageNumber = 1;
             rows = 10;
-            query += "&filterBySeatingCapacityCondition=" + this.seatingCapacityCondition + "&filterBySeatingCapacity=" + this.seatingCapacity;
+            query +=
+                '&filterBySeatingCapacityCondition=' +
+                this.seatingCapacityCondition +
+                '&filterBySeatingCapacity=' +
+                this.seatingCapacity;
             if (this.selectedCategories.length > 0) {
-                newQuery += "&categoryId="+this.selectedCategories[0]
-                query += "&filterByCategory=" + this.selectedCategories;
+                newQuery += '&categoryId=' + this.selectedCategories[0];
+                query += '&filterByCategory=' + this.selectedCategories;
             }
             if (this.selectedPropertyTypes.length > 0) {
-                this.selectedPropertyTypes.forEach(element => {
-                    newQuery += "&propertyType="+element;
+                this.selectedPropertyTypes.forEach((element) => {
+                    newQuery += '&propertyType=' + element;
                 });
-                query += "&filterByPropertyType=" + this.selectedPropertyTypes;
+                query += '&filterByPropertyType=' + this.selectedPropertyTypes;
             }
             if (this.minVenuePrice > 0 && this.maxVenuePrice > 0) {
-                newQuery += "&minVenuePrice="+this.minVenuePrice+"&=maxVenuePrice"+this.maxVenuePrice;
-                query += "&filterByMinVenuePrice=" + this.minVenuePrice + "&filterByMaxVenuePrice=" + this.maxVenuePrice;
+                newQuery +=
+                    '&minVenuePrice=' +
+                    this.minVenuePrice +
+                    '&=maxVenuePrice' +
+                    this.maxVenuePrice;
+                query +=
+                    '&filterByMinVenuePrice=' +
+                    this.minVenuePrice +
+                    '&filterByMaxVenuePrice=' +
+                    this.maxVenuePrice;
             }
             if (this.selectedFoodTypes.length > 0) {
-                this.selectedFoodTypes.forEach(ele =>{
-                    newQuery += "&foodType="+ele;
-                })
-                query += "&filterByFoodType=" + this.selectedFoodTypes;
+                this.selectedFoodTypes.forEach((ele) => {
+                    newQuery += '&foodType=' + ele;
+                });
+                query += '&filterByFoodType=' + this.selectedFoodTypes;
             }
-            if (this.capacityCondition != undefined && this.capacity != undefined && this.capacityCondition != '' && this.capacity != '') {
-                query += "&filterByGuestCondition=" + this.capacityCondition + "&filterByGuestCapacity=" + this.capacity;
-                newQuery += "&guestCount="+this.capacityCondition;
+            if (
+                this.capacityCondition != undefined &&
+                this.capacity != undefined &&
+                this.capacityCondition != '' &&
+                this.capacity != ''
+            ) {
+                query +=
+                    '&filterByGuestCondition=' +
+                    this.capacityCondition +
+                    '&filterByGuestCapacity=' +
+                    this.capacity;
+                newQuery += '&guestCount=' + this.capacityCondition;
             }
         }
 
@@ -1788,123 +2348,134 @@ export class VenueCategoryListComponent {
         //     }
 
         // }
-        this.selectedAmenitiesNew.forEach(element => {
-            newQuery += "&amenities="+element;
+        this.selectedAmenitiesNew.forEach((element) => {
+            newQuery += '&amenities=' + element;
         });
         if (this.swimmingPoolFilter == true) {
-            query += "&filterBySwimmingPool=" + this.swimmingPoolFilter;
+            query += '&filterBySwimmingPool=' + this.swimmingPoolFilter;
         }
         if (this.parkingFilter == true) {
-            query += "&filterByParking=" + this.parkingFilter;
+            query += '&filterByParking=' + this.parkingFilter;
         }
         if (this.acFilter == true) {
-            query += "&filterByAc=" + this.acFilter;
+            query += '&filterByAc=' + this.acFilter;
         }
         if (this.greenRoomsFilter == true) {
-            query += "&filterByGreenRooms=" + this.greenRoomsFilter;
+            query += '&filterByGreenRooms=' + this.greenRoomsFilter;
         }
         if (this.powerBackupFilter == true) {
-            query += "&filterByPowerBackup=" + this.powerBackupFilter;
+            query += '&filterByPowerBackup=' + this.powerBackupFilter;
         }
         if (this.djFilter == true) {
-            query += "&filterByDj=" + this.djFilter;
+            query += '&filterByDj=' + this.djFilter;
         }
         if (this.entertainmentLicenseFilter == true) {
-            query += "&filterByEntertainmentLicense=" + this.entertainmentLicenseFilter;
+            query +=
+                '&filterByEntertainmentLicense=' +
+                this.entertainmentLicenseFilter;
         }
         if (this.selectedVenueIds.length > 0) {
-            this.selectedVenueIds.forEach(element => {
-                newQuery += "&venueIds="+element;
+            this.selectedVenueIds.forEach((element) => {
+                newQuery += '&venueIds=' + element;
             });
-            query += "&filterByVenueIds=" + this.selectedVenueIds;
+            query += '&filterByVenueIds=' + this.selectedVenueIds;
         }
         if (this.selectedSubareaIds.length > 0) {
-            this.selectedSubareaIds.forEach(element => {
-                newQuery += "&subareaid="+element;
+            this.selectedSubareaIds.forEach((element) => {
+                newQuery += '&subareaid=' + element;
             });
-            query += "&filterBySubareaIds=" + this.selectedSubareaIds;
+            query += '&filterBySubareaIds=' + this.selectedSubareaIds;
         }
         if (this.selectedCities.length > 0) {
-            this.selectedCities.forEach(element => {
-                if(typeof element === 'string'){
-                    newQuery += "&citycode="+element;
-                }else{
-                    newQuery += "&citycode="+element.id;
+            this.selectedCities.forEach((element) => {
+                if (typeof element === 'string') {
+                    newQuery += '&citycode=' + element;
+                } else {
+                    newQuery += '&citycode=' + element.id;
                 }
             });
-            query += "&filterByCities=" + this.selectedCities;
+            query += '&filterByCities=' + this.selectedCities;
         }
         if (this.selectedSlotId != undefined) {
-            newQuery += "&slotId="+this.selectedSlotId;
-            query += "&filterBySlotId=" + this.selectedSlotId;
+            newQuery += '&slotId=' + this.selectedSlotId;
+            query += '&filterBySlotId=' + this.selectedSlotId;
         }
         if (this.startDate != undefined && this.endDate != undefined) {
-            newQuery += "&startSearchDate=" + this.startDate + "&endSearchDate=" + this.endDate;
-            query += "&filterByStartDate=" + this.startDate + "&filterByEndDate=" + this.endDate;
+            newQuery +=
+                '&startSearchDate=' +
+                this.startDate +
+                '&endSearchDate=' +
+                this.endDate;
+            query +=
+                '&filterByStartDate=' +
+                this.startDate +
+                '&filterByEndDate=' +
+                this.endDate;
         }
 
-        query += "&pageSize=" + rows + "&pageNumber=" + this.pageNumber + params;
+        query +=
+            '&pageSize=' + rows + '&pageNumber=' + this.pageNumber + params;
         this.venueList = [];
         this.venueList = Object.assign([], this.finalVenueList);
 
-        newQuery += "&pageSize=" + rows + "&pageNumber=" + this.pageNumber;
+        newQuery += '&pageSize=' + rows + '&pageNumber=' + this.pageNumber;
         // console.log(query);
         console.log(newQuery);
 
         // this.venueService.getVenueListWithoutAuth(query).subscribe(
         this.venueService.getVenueListForFilter(newQuery).subscribe(
-            async data => {
+            async (data) => {
                 //if (data.data.items.length > 0) {
                 this.tmpVenueList = data.data.items;
-                this.tmpVenueList.forEach(element => {
+                this.tmpVenueList.forEach((element) => {
                     if (element.venueVideo !== '') {
                         element.venueImage.push({ video: element.venueVideo });
                     }
-                })
+                });
                 this.finalVenueList = [...this.venueList, ...this.tmpVenueList];
                 this.selectedVenueList = [];
                 let minVenuePriceArray = [];
                 let maxVenuePriceArray = [];
                 let minPerPaxArray = [];
                 let maxPerPaxArray = [];
-                this.finalVenueList.forEach(element => {
+                this.finalVenueList.forEach((element) => {
                     // this.facilitiesArray = [];
                     element['facilities'] = [];
                     let swimmingObj = {
-                        'title': 'Swimming Pool',
-                        'details': element.swimmingdetails,
+                        title: 'Swimming Pool',
+                        details: element.swimmingdetails,
                         // 'icon': "assets/img/svg/AC.svg",
-                    }
+                    };
                     let parkingObj = {
-                        'title': 'Parking',
-                        'details': element.parkingdetails,
+                        title: 'Parking',
+                        details: element.parkingdetails,
                         // 'icon': "assets/img/svg/parking.svg",
-                    }
+                    };
                     let acObj = {
-                        'title': 'A/C',
-                        'details': element.acdetails,
+                        title: 'A/C',
+                        details: element.acdetails,
                         // 'icon': "assets/img/svg/AC.svg",
-                    }
+                    };
                     let roomsObj = {
-                        'title': "Rooms",
-                        'details': element.capacityDescription,
+                        title: 'Rooms',
+                        details: element.capacityDescription,
                         // 'icon': "assets/img/svg/Hall.svg",
-                    }
+                    };
                     let powerBackupObj = {
-                        'title': 'Power Backup',
-                        'details': element.powerbackupdetails,
+                        title: 'Power Backup',
+                        details: element.powerbackupdetails,
                         // 'icon': "assets/img/svg/AC.svg",
-                    }
+                    };
                     let djObj = {
-                        'title': 'DJ',
-                        'details': element.djdetails,
+                        title: 'DJ',
+                        details: element.djdetails,
                         // 'icon': "assets/img/svg/AC.svg",
-                    }
+                    };
                     let entertainmentLicenseObj = {
-                        'title': 'Entertainment License',
-                        'details': element.entertainmentlicensedetails,
+                        title: 'Entertainment License',
+                        details: element.entertainmentlicensedetails,
                         // 'icon': "assets/img/svg/parking.svg",
-                    }
+                    };
                     // let danceFloorObj = {
                     //     'title': 'Dance Floor',
                     //     'details': element.dancefloordetails,
@@ -1974,12 +2545,15 @@ export class VenueCategoryListComponent {
                         // console.log('loop in', this.selectedFilter);
                         this.selectedVenueList = [element];
                         if (this.selectedFilter !== undefined) {
-                            this.selectedFilter.forEach(sElement => {
-                                let index = this.findIndexById(sElement.id, this.selectedFilter);
+                            this.selectedFilter.forEach((sElement) => {
+                                let index = this.findIndexById(
+                                    sElement.id,
+                                    this.selectedFilter
+                                );
                                 if (index == -1) {
                                     this.selectedFilter.push(element);
                                 }
-                            })
+                            });
                             //console.log(this.selectedFilter);
                         } else {
                             this.selectedFilter = [element];
@@ -1992,46 +2566,62 @@ export class VenueCategoryListComponent {
                         //element.foodMenuType.forEach(fElement => {
                         if (element.foodMenuType.jainFood !== undefined) {
                             if (element.foodMenuType.jainFood.length > 0) {
-                                element.foodMenuType.jainFood.forEach(jfElement => {
-                                    if (jfElement.value > 0) {
-                                        this.allFoodMenuPriceArray.push(jfElement.value);
-                                        jfElement.foodType = 'Jain Food';
-                                        foodMenuArray.push(jfElement);
+                                element.foodMenuType.jainFood.forEach(
+                                    (jfElement) => {
+                                        if (jfElement.value > 0) {
+                                            this.allFoodMenuPriceArray.push(
+                                                jfElement.value
+                                            );
+                                            jfElement.foodType = 'Jain Food';
+                                            foodMenuArray.push(jfElement);
+                                        }
                                     }
-                                });
+                                );
                             }
                         }
                         if (element.foodMenuType.mixFood !== undefined) {
                             if (element.foodMenuType.mixFood.length > 0) {
-                                element.foodMenuType.mixFood.forEach(mfElement => {
-                                    if (mfElement.value > 0) {
-                                        this.allFoodMenuPriceArray.push(mfElement.value);
-                                        mfElement.foodType = 'Mix Food';
-                                        foodMenuArray.push(mfElement);
+                                element.foodMenuType.mixFood.forEach(
+                                    (mfElement) => {
+                                        if (mfElement.value > 0) {
+                                            this.allFoodMenuPriceArray.push(
+                                                mfElement.value
+                                            );
+                                            mfElement.foodType = 'Mix Food';
+                                            foodMenuArray.push(mfElement);
+                                        }
                                     }
-                                });
+                                );
                             }
                         }
                         if (element.foodMenuType.non_veg !== undefined) {
                             if (element.foodMenuType.non_veg.length > 0) {
-                                element.foodMenuType.non_veg.forEach(nvElement => {
-                                    if (nvElement.value > 0) {
-                                        this.allFoodMenuPriceArray.push(nvElement.value);
-                                        nvElement.foodType = 'Non Veg Food';
-                                        foodMenuArray.push(nvElement);
+                                element.foodMenuType.non_veg.forEach(
+                                    (nvElement) => {
+                                        if (nvElement.value > 0) {
+                                            this.allFoodMenuPriceArray.push(
+                                                nvElement.value
+                                            );
+                                            nvElement.foodType = 'Non Veg Food';
+                                            foodMenuArray.push(nvElement);
+                                        }
                                     }
-                                });
+                                );
                             }
                         }
                         if (element.foodMenuType.veg_food !== undefined) {
                             if (element.foodMenuType.veg_food.length > 0) {
-                                element.foodMenuType.veg_food.forEach(vElement => {
-                                    if (vElement.value > 0) {
-                                        this.allFoodMenuPriceArray.push(vElement.value);
-                                        vElement.foodType = 'Veg Food';
-                                        foodMenuArray.push(vElement);
+                                element.foodMenuType.veg_food.forEach(
+                                    (vElement) => {
+                                        if (vElement.value > 0) {
+                                            this.allFoodMenuPriceArray.push(
+                                                vElement.value
+                                            );
+                                            vElement.foodType = 'Veg Food';
+                                            foodMenuArray.push(vElement);
+                                        }
                                     }
-                                });
+                                );
                             }
                         }
                         // });
@@ -2039,20 +2629,22 @@ export class VenueCategoryListComponent {
                     let minPrice = 0;
                     let maxPrice = 0;
                     if (this.allFoodMenuPriceArray.length > 0) {
-                        minPrice = Math.min(...this.allFoodMenuPriceArray)
+                        minPrice = Math.min(...this.allFoodMenuPriceArray);
                     }
                     if (this.allFoodMenuPriceArray.length > 0) {
-                        maxPrice = Math.max(...this.allFoodMenuPriceArray)
+                        maxPrice = Math.max(...this.allFoodMenuPriceArray);
                     }
                     let guestCount = this.guestCount;
                     // if (guestCount < Number(500)) {
                     //     guestCount = Number(500);
                     // }
                     element['minCapacity'] = guestCount;
-                    let foodMenu = foodMenuArray.find(x => x.value == minPrice);
+                    let foodMenu = foodMenuArray.find(
+                        (x) => x.value == minPrice
+                    );
                     element['minFoodType'] = foodMenu;
-                    element['minVenuePrice'] = Number(minPrice) * (guestCount);
-                    element['maxVenuePrice'] = Number(maxPrice) * (guestCount);
+                    element['minVenuePrice'] = Number(minPrice) * guestCount;
+                    element['maxVenuePrice'] = Number(maxPrice) * guestCount;
                     element['showSendEnquiry'] = false;
                     element['selectedStatus'] = false;
                     if (element['minRevenue'] > element['minVenuePrice']) {
@@ -2072,28 +2664,28 @@ export class VenueCategoryListComponent {
                     if (element['maxPerPax'] > 0) {
                         maxPerPaxArray.push(element['maxPerPax']);
                     }
-                    this.selectedCompareVenues.forEach(scElement => {
+                    this.selectedCompareVenues.forEach((scElement) => {
                         if (scElement.id === element.id) {
                             element['selectedStatus'] = true;
                         }
-                    })
+                    });
                 });
                 let minVenuePrice = 0;
                 let maxVenuePrice = 0;
                 let minPerPaxPrice = 0;
                 let maxPerPaxPrice = 0;
                 if (minVenuePriceArray.length > 0) {
-                    minVenuePrice = Math.min(...minVenuePriceArray)
+                    minVenuePrice = Math.min(...minVenuePriceArray);
                 }
                 if (minVenuePriceArray.length > 0) {
-                    maxVenuePrice = Math.max(...minVenuePriceArray)
+                    maxVenuePrice = Math.max(...minVenuePriceArray);
                 }
                 if (minPerPaxArray.length > 0) {
-                    minPerPaxPrice = Math.min(...minPerPaxArray)
+                    minPerPaxPrice = Math.min(...minPerPaxArray);
                 }
 
                 if (maxPerPaxArray.length > 0) {
-                    maxPerPaxPrice = Math.max(...minPerPaxArray)
+                    maxPerPaxPrice = Math.max(...minPerPaxArray);
                 }
 
                 // this.venuePriceRangeValues = [minVenuePrice, maxVenuePrice];
@@ -2128,79 +2720,90 @@ export class VenueCategoryListComponent {
                     this.noVenueFlag = false;
                 }
 
-
-
                 const localBusinessSchema = {
-                    "@context": "http://schema.org/",
-                    "@type": "LocalBusiness",
-                    "@id": location.href,
-                    "name": this.currentTitle,
-                    "description": this.currentDescription,
-                    "image": [
-                        this.finalVenueList[0].venueImage[0]?.venue_image_src //first image
+                    '@context': 'http://schema.org/',
+                    '@type': 'LocalBusiness',
+                    '@id': location.href,
+                    name: this.currentTitle,
+                    description: this.currentDescription,
+                    image: [
+                        this.finalVenueList[0].venueImage[0]?.venue_image_src, //first image
                     ],
-                    "address": {
-                        "@type": "PostalAddress",
+                    address: {
+                        '@type': 'PostalAddress',
                         // "streetAddress": "Near thane,Mumbai, Maharashtra",
-                        "streetAddress": "Near "+this.finalVenueList[0].subarea+", "+this.finalVenueList[0].cityname+","+this.finalVenueList[0].statename+"",
+                        streetAddress:
+                            'Near ' +
+                            this.finalVenueList[0].subarea +
+                            ', ' +
+                            this.finalVenueList[0].cityname +
+                            ',' +
+                            this.finalVenueList[0].statename +
+                            '',
                         // "addressLocality": "Near thane, Mumbai, Maharashtra",
-                        "addressLocality": "Near "+this.finalVenueList[0].subarea+", "+this.finalVenueList[0].cityname+","+this.finalVenueList[0].statename+"",
+                        addressLocality:
+                            'Near ' +
+                            this.finalVenueList[0].subarea +
+                            ', ' +
+                            this.finalVenueList[0].cityname +
+                            ',' +
+                            this.finalVenueList[0].statename +
+                            '',
                         // "addressRegion": "Mumbai",
-                        "addressRegion": this.finalVenueList[0].cityname,
+                        addressRegion: this.finalVenueList[0].cityname,
                         // "postalCode": "400601",
-                        "postalCode": this.finalVenueList[0].zipcode,
-                        "addressCountry": "India"
+                        postalCode: this.finalVenueList[0].zipcode,
+                        addressCountry: 'India',
                     },
-                    "aggregateRating": {
-                        "@type": "AggregateRating",
-                        "ratingValue": this.finalVenueList[0].googleRating,
-                        "reviewCount": "1206",
-                        "bestRating": "5",
-                        "worstRating": "1.2"
+                    aggregateRating: {
+                        '@type': 'AggregateRating',
+                        ratingValue: this.finalVenueList[0].googleRating,
+                        reviewCount: '1206',
+                        bestRating: '5',
+                        worstRating: '1.2',
                     },
-                    "priceRange": "Venue price starts from Rs."+minVenuePrice+" to Rs."+maxVenuePrice,
-                    "telephone": "+91 93720 91300"
-                }
-
+                    priceRange:
+                        'Venue price starts from Rs.' +
+                        minVenuePrice +
+                        ' to Rs.' +
+                        maxVenuePrice,
+                    telephone: '+91 93720 91300',
+                };
 
                 const localBusinessScript = document.createElement('script');
                 localBusinessScript.type = 'application/ld+json';
                 localBusinessScript.text = JSON.stringify(localBusinessSchema);
                 document.body.appendChild(localBusinessScript);
             },
-            err => {
+            (err) => {
                 this.errorMessage = err.error.message;
             }
         );
     }
     getVenueDetails(id) {
-        this.urlMode = "venue_details";
+        this.urlMode = 'venue_details';
         let selectedCities = JSON.stringify(this.selectedCities);
         let selectedSubareaIds = JSON.stringify(this.selectedSubareaIds);
         let selectedVenueIds = JSON.stringify(this.selectedVenueIds);
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
-        const queryParams =  {
+        const queryParams = {
             startDate: this.startDate,
             endDate: this.endDate,
             capacity: this.guestCount,
             occasion: this.selectedCategories,
             city: selectedCities,
             area: selectedSubareaIds,
-            venue: selectedVenueIds
+            venue: selectedVenueIds,
         };
         // console.log(queryParams);
 
-        this.router.navigate(
-            ['/venue/' + id],
-            {
-                queryParams: queryParams
-            }
-        );
-
+        this.router.navigate(['/venue/' + id], {
+            queryParams: queryParams,
+        });
     }
     onclickcompare() {
-        this.router.navigate(['/compare'])
+        this.router.navigate(['/compare']);
         // window.open("/compare")
     }
     filterCountry(event) {
@@ -2233,9 +2836,7 @@ export class VenueCategoryListComponent {
                 //this.venueid.push(venue.id);
                 this.venueService.passvenueID(this.selectedCompareVenues);
                 this.venuearray = this.selectedCompareVenues;
-                this.selectedCompareVenues.forEach(e => {
-
-
+                this.selectedCompareVenues.forEach((e) => {
                     //this.venuearray.push(this.venueDataById)
                     // this.venueService.getVenueDetails(e[0]).subscribe(res => {
 
@@ -2243,16 +2844,22 @@ export class VenueCategoryListComponent {
                     // )
 
                     if (e.id === venue.id) {
-                        let venueData = this.finalVenueList.find(x => x.id == e.id);
+                        let venueData = this.finalVenueList.find(
+                            (x) => x.id == e.id
+                        );
 
                         this.venueDataById = venueData;
-                        this.venueimg = venueData['venueImage'][0]['venue_image_src'];
-                        let vIndex = this.findArrayIndexId(venue.id, this.finalVenueList);
+                        this.venueimg =
+                            venueData['venueImage'][0]['venue_image_src'];
+                        let vIndex = this.findArrayIndexId(
+                            venue.id,
+                            this.finalVenueList
+                        );
                         if (vIndex != -1) {
                             this.finalVenueList[vIndex].selectedStatus = true;
                         }
                     }
-                })
+                });
             }
         } else {
             let index = this.findIndexId(venue.id, this.venueid);
@@ -2267,7 +2874,10 @@ export class VenueCategoryListComponent {
             if (venueIndex != -1) {
                 this.venuearray.splice(venueIndex, 1);
             }
-            let sIndex = this.findArrayIndexId(venue.id, this.selectedCompareVenues);
+            let sIndex = this.findArrayIndexId(
+                venue.id,
+                this.selectedCompareVenues
+            );
 
             if (sIndex != -1) {
                 this.selectedCompareVenues.splice(sIndex, 1);
@@ -2335,14 +2945,13 @@ export class VenueCategoryListComponent {
         }
     }
     clearAll() {
-        this.router.navigateByUrl("/banquet-halls")
+        this.router.navigateByUrl('/banquet-halls');
         this.venuearray = [];
         this.selectedCompareVenues = [];
-        this.finalVenueList.forEach(element => {
+        this.finalVenueList.forEach((element) => {
             element.selectedStatus = false;
         });
         this.showbottombar = false;
-
     }
 
     open(event) {
@@ -2351,15 +2960,14 @@ export class VenueCategoryListComponent {
         this.displayBasic = true;
         let venueData = '';
         this.venueImages = [];
-        venueData = this.finalVenueList.find(x => x.id == event);
+        venueData = this.finalVenueList.find((x) => x.id == event);
         this.venueImages = venueData['venueImage'];
-
     }
     onScrollDown() {
         console.log(this.lazyLoadEvent);
 
         this.pageNumber++;
-        this.direction = "down";
+        this.direction = 'down';
         this.getVenueList(this.lazyLoadEvent, this.mode);
     }
     @HostListener('window:keyup.esc', ['$event']) w(e: KeyboardEvent) {
@@ -2372,17 +2980,39 @@ export class VenueCategoryListComponent {
     }
 
     showOfferDialog() {
-        this.urlMode = "venue_list";
+        this.urlMode = 'venue_list';
         if (this.selectedCategoryId == undefined) {
-            this.messageService.add({ key: 'toastmsg', severity: 'error', summary: 'Error', detail: 'Please select venue occasion.', life: 3000 });
+            this.messageService.add({
+                key: 'toastmsg',
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Please select venue occasion.',
+                life: 3000,
+            });
             return;
         }
-        if (this.selectedCities.length === 0 && this.selectedSubareaIds.length === 0 && this.selectedVenueIds.length === 0) {
-            this.messageService.add({ key: 'toastmsg', severity: 'error', summary: 'Error', detail: 'Please enter city or area or venue.', life: 3000 });
+        if (
+            this.selectedCities.length === 0 &&
+            this.selectedSubareaIds.length === 0 &&
+            this.selectedVenueIds.length === 0
+        ) {
+            this.messageService.add({
+                key: 'toastmsg',
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Please enter city or area or venue.',
+                life: 3000,
+            });
             return;
         }
         if (this.capacity === undefined) {
-            this.messageService.add({ key: 'toastmsg', severity: 'error', summary: 'Error', detail: 'Please select guest count.', life: 3000 });
+            this.messageService.add({
+                key: 'toastmsg',
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Please select guest count.',
+                life: 3000,
+            });
             return;
         }
         // if (this.startDate === undefined && this.endDate === undefined) {
@@ -2401,17 +3031,17 @@ export class VenueCategoryListComponent {
             let selectedVenueIds = JSON.stringify(this.selectedVenueIds);
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
             this.router.onSameUrlNavigation = 'reload';
-            this.router.navigate(
-                ['/banquet-halls'],
-                {
-                    queryParams: {
-                        startDate: this.startDate, endDate: this.endDate, capacity: this.capacity, occasion: this.selectedCategoryId, city: selectedCities,
-                        area: selectedSubareaIds, venue: selectedVenueIds
-                    }
-                }
-            );
+            this.router.navigate(['/banquet-halls'], {
+                queryParams: {
+                    startDate: this.startDate,
+                    endDate: this.endDate,
+                    capacity: this.capacity,
+                    occasion: this.selectedCategoryId,
+                    city: selectedCities,
+                    area: selectedSubareaIds,
+                    venue: selectedVenueIds,
+                },
+            });
         }
     }
-
-
 }
